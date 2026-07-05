@@ -51,3 +51,64 @@ exports.getDashboardStats = async (req, res) => {
 
   }
 };
+exports.getDashboardAnalytics = (req, res) => {
+
+  const queries = [
+
+    "SELECT IFNULL(SUM(amount),0) AS totalRentCollected FROM rent_payments WHERE payment_status='Paid'",
+
+    "SELECT IFNULL(SUM(amount),0) AS pendingRent FROM rent_payments WHERE payment_status='Pending'",
+
+    `
+    SELECT
+    ROUND(
+      (
+        SELECT COUNT(*)
+        FROM flats
+        WHERE status='Occupied'
+      ) * 100 /
+      NULLIF(
+        (SELECT COUNT(*) FROM flats),
+        0
+      ),
+      2
+    ) AS occupancyRate
+    `
+  ];
+
+  Promise.all(
+
+    queries.map(query =>
+      new Promise((resolve, reject) => {
+
+        db.query(query, (err, result) => {
+
+          if (err) reject(err);
+          else resolve(result[0]);
+
+        });
+
+      })
+    )
+
+  )
+
+  .then(results => {
+
+    res.json({
+
+      ...results[0],
+      ...results[1],
+      ...results[2]
+
+    });
+
+  })
+
+  .catch(err => {
+
+    res.status(500).json(err);
+
+  });
+
+};
