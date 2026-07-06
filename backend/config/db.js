@@ -1,20 +1,31 @@
 const mysql = require("mysql2");
 
-const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
-connection.connect((err) => {
+function connectWithRetry() {
+  pool.getConnection((err, connection) => {
     if (err) {
-        console.error("❌ Database Connection Failed");
-        console.error(err);
-        return;
+      console.error("❌ MySQL Connection Error:", err.code);
+
+      setTimeout(connectWithRetry, 5000);
+      return;
     }
 
     console.log("✅ MySQL Connected Successfully");
-});
 
-module.exports = connection;
+    connection.release();
+  });
+}
+
+connectWithRetry();
+
+module.exports = pool;
