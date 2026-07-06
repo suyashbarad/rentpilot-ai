@@ -20,6 +20,14 @@ const dashboardRoutes = require("./routes/dashboardRoutes");        //final dash
 const searchRoutes=require("./routes/searchRoutes");                //to find earch result
 const aiRoutes = require("./routes/aiRoutes");                     //to use ai to find currect situation of system
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "UP",
+    service: "RentPilot AI",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/buildings", buildingRoutes);
 app.use("/api/flats", flatRoutes);
