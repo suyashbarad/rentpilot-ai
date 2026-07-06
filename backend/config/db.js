@@ -1,5 +1,5 @@
 const mysql = require("mysql2");
-
+const logger = require("../utils/logger");
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -17,13 +17,13 @@ const connection = mysql.createConnection({
 function connectWithRetry() {
   connection.connect((err) => {
     if (err) {
-      console.log("❌ MySQL not ready. Retrying in 5 seconds...");
+      logger.info("❌ MySQL not ready. Retrying in 5 seconds...");
       console.error(err.message);
       setTimeout(connectWithRetry, 5000);
       return;
     }
 
-    console.log("✅ MySQL Connected Successfully");
+    logger.info("✅ MySQL Connected Successfully");
   });
 }
 

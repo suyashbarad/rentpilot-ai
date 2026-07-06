@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
+const morgan = require("morgan");
+const logger = require("./utils/logger");
 
 const app = express();
 
@@ -25,6 +27,35 @@ app.get("/health", (req, res) => {
     status: "UP",
     service: "RentPilot AI",
     timestamp: new Date().toISOString(),
+  });
+});
+
+const db = require("./config/db");
+
+app.get("/ready", (req, res) => {
+  db.query("SELECT 1", (err) => {
+    if (err) {
+      return res.status(503).json({
+        status: "NOT READY",
+      });
+    }
+
+    res.json({
+      status: "READY",
+    });
+  });
+});
+
+app.use(
+  morgan("combined", {
+    stream: {
+      write: (message) => logger.info(message.trim()),
+    },
+  })
+);
+app.get("/live", (req, res) => {
+  res.json({
+    status: "ALIVE",
   });
 });
 
