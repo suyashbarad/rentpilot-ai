@@ -1,31 +1,32 @@
 const mysql = require("mysql2");
 
-const pool = mysql.createPool({
+const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+  ssl:
+    process.env.DB_SSL === "true"
+      ? {
+          rejectUnauthorized: false,
+        }
+      : undefined,
 });
 
 function connectWithRetry() {
-  pool.getConnection((err, connection) => {
+  connection.connect((err) => {
     if (err) {
-      console.error("❌ MySQL Connection Error:", err.code);
-
+      console.log("❌ MySQL not ready. Retrying in 5 seconds...");
+      console.error(err.message);
       setTimeout(connectWithRetry, 5000);
       return;
     }
 
     console.log("✅ MySQL Connected Successfully");
-
-    connection.release();
   });
 }
 
 connectWithRetry();
 
-module.exports = pool;
+module.exports = connection;
