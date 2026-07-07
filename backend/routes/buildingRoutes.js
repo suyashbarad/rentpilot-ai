@@ -3,6 +3,8 @@ const router = express.Router();
 
 const buildingController = require("../controllers/buildingController");
 const authMiddleware = require("../middlewares/authMiddleware");
+const { body } = require("express-validator");
+const validate = require("../middlewares/validate");
 
 /**
  * @swagger
@@ -18,8 +20,29 @@ const authMiddleware = require("../middlewares/authMiddleware");
  *         description: building created successfully
  */
 
-router.post("/", authMiddleware, buildingController.createBuilding);
+router.post(
+  "/",
+  authMiddleware,
+  [
+    body("building_name")
+      .notEmpty()
+      .withMessage("Building name is required"),
 
+    body("address")
+      .notEmpty()
+      .withMessage("Address is required"),
+
+    body("total_floors")
+      .isInt({ min: 1 })
+      .withMessage("Total floors must be at least 1"),
+
+    body("total_flats")
+      .isInt({ min: 1 })
+      .withMessage("Total flats must be at least 1")
+  ],
+  validate,
+  buildingController.createBuilding
+);
 /**
  * @swagger
  * /api/buildings:
