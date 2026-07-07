@@ -25,3 +25,12 @@ const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   logger.info(`🚀 Server running on port ${PORT}`);
 });
+process.on("SIGINT", () => {
+  logger.info("Server shutting down...");
+  process.exit(0);
+});
+
+process.on("SIGTERM", () => {
+  logger.info("Server shutting down...");
+  process.exit(0);
+});

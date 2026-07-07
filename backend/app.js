@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const logger = require("./utils/logger");       //for deployment
 const helmet = require("helmet");       //for security purpose
 const rateLimit = require("express-rate-limit");
+const compression = require("compression");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(
     limit: "10kb",
   })
 );
+app.use(compression());
 
 const authRoutes = require("./routes/authRoutes");         
 const buildingRoutes = require("./routes/buildingRoutes");          //for buildings management
@@ -96,6 +98,13 @@ app.use("/api/ai", aiRoutes);
 
 app.get("/", (req, res) => {
     res.send("🚀 RentPilot AI Backend is Running");
+});
+app.get("/version", (req, res) => {
+  res.json({
+    app: "RentPilot AI",
+    version: "1.0.0",
+    environment: process.env.NODE_ENV || "development",
+  });
 });
 app.use(
   "/api-docs",
