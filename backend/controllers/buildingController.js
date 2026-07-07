@@ -41,15 +41,28 @@ exports.createBuilding = (req, res) => {
 };
 
 exports.getAllBuildings = (req, res) => {
-  const sql = "SELECT * FROM buildings ORDER BY id DESC";
 
-  db.query(sql, (err, results) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
+  console.log("Pagination version is running");
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
 
-    res.json(results);
-  });
+    const offset = (page - 1) * limit;
+
+    db.query(
+        "SELECT * FROM buildings LIMIT ? OFFSET ?",
+        [limit, offset],
+        (err, results) => {
+
+            if (err) {
+                return res.status(500).json(err);
+            }
+
+            res.json({
+            success: true,
+            data: results
+});
+        }
+    );
 };
 exports.getBuildingById = (req, res) => {       // so that a frontend will find the building using id only
   const { id } = req.params;
