@@ -3,12 +3,25 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const morgan = require("morgan");
-const logger = require("./utils/logger");
+const logger = require("./utils/logger");       //for deployment
+const helmet = require("helmet");       //for security purpose
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
+app.use(helmet());
+app.use(
+  express.json({
+    limit: "10kb",
+  })
+);
 
 const authRoutes = require("./routes/authRoutes");         
 const buildingRoutes = require("./routes/buildingRoutes");          //for buildings management
@@ -21,6 +34,16 @@ const notificationRoutes = require("./routes/notificationRoutes");     //for not
 const dashboardRoutes = require("./routes/dashboardRoutes");        //final dashboard
 const searchRoutes=require("./routes/searchRoutes");                //to find earch result
 const aiRoutes = require("./routes/aiRoutes");                     //to use ai to find currect situation of system
+
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: {
+    success: false,
+    message: "Too many requests. Please try again later."
+  }
+});
 
 app.get("/health", (req, res) => {
   res.status(200).json({
@@ -79,5 +102,23 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerSpec)
 );
+
+app.use(limiter);
+app.disable("x-powered-by");
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+app.use((err, req, res, next) => {
+  console.error(err);
+
+  res.status(500).json({
+    success: false,
+    message: "Internal Server Error",
+  });
+});
 
 module.exports = app;

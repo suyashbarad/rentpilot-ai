@@ -2,7 +2,19 @@ require("dotenv").config();
 
 const logger = require("./utils/logger");
 const app = require("./app");
+const requiredEnv = [
+  "DB_HOST",
+  "DB_USER",
+  "DB_PASSWORD",
+  "DB_NAME",
+  "JWT_SECRET",
+];
 
+requiredEnv.forEach((env) => {
+  if (!process.env[env]) {
+    throw new Error(`Missing environment variable: ${env}`);
+  }
+});
 // Connect to MySQL
 require("./config/db");
 
