@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 exports.createTenant = (req, res) => {
   const {
@@ -31,7 +31,7 @@ exports.createTenant = (req, res) => {
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       user_id,
@@ -62,7 +62,7 @@ exports.getAllTenants = (req, res) => {
     ORDER BY tenants.id DESC
   `;
 
-  db.query(sql, (err, results) => {
+  pool.query(sql, (err, results) => {
     if (err) return res.status(500).json(err);
     res.json(results);
   });
@@ -70,7 +70,7 @@ exports.getAllTenants = (req, res) => {
 exports.getTenantById = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "SELECT * FROM tenants WHERE id = ?",
     [id],
     (err, results) => {
@@ -105,7 +105,7 @@ exports.updateTenant = (req, res) => {
     WHERE id=?
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       user_id,
@@ -129,7 +129,7 @@ exports.updateTenant = (req, res) => {
 exports.deleteTenant = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "DELETE FROM tenants WHERE id = ?",
     [id],
     (err) => {

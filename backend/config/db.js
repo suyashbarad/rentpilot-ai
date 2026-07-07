@@ -29,16 +29,25 @@ pool.getConnection((err, connection) => {
 });
 
 function connectWithRetry() {
-  pool.getConnection((err, connection) => {
-  if (err) {
-    logger.error(err.message);
-    return;
-  }
+  function connectDB() {
+    pool.getConnection((err, connection) => {
 
-  logger.info("✅ MySQL Pool Connected");
+        if (err) {
+            logger.error(err.message);
+            return;
+        }
 
-  connection.release();
-});
+        logger.info("✅ MySQL Pool Connected");
+
+        connection.release();
+
+    });
+}
+
+module.exports = {
+    pool,
+    connectDB
+};
 }
 
 connectWithRetry();

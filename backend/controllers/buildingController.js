@@ -1,4 +1,6 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
+const redis = require("../config/redis");
+const redisClient = require("../config/redis");
 
 exports.createBuilding = (req, res) => {
   const {
@@ -25,7 +27,7 @@ exports.createBuilding = (req, res) => {
     VALUES (?, ?, ?, ?)
   `;
 
-  db.query(
+  pool.query(
     sql,
     [building_name, address, total_floors, total_flats],
     (err, result) => {
@@ -40,34 +42,33 @@ exports.createBuilding = (req, res) => {
   );
 };
 
-exports.getAllBuildings = (req, res) => {
+exports.getAllBuildings = async (req, res) => {
+  const cached = await redisClient.get("buildings");
 
-  console.log("Pagination version is running");
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
+  if (cached) {
+    return res.json({
+      source: "redis",
+      data: JSON.parse(cached),
+    });
+  }
 
-    const offset = (page - 1) * limit;
+  db.query("SELECT * FROM buildings", async (err, results) => {
+    if (err) return res.status(500).json(err);
 
-    db.query(
-        "SELECT * FROM buildings LIMIT ? OFFSET ?",
-        [limit, offset],
-        (err, results) => {
+    await redisClient.set("buildings", JSON.stringify(results), {
+      EX: 60,
+    });
 
-            if (err) {
-                return res.status(500).json(err);
-            }
-
-            res.json({
-            success: true,
-            data: results
-});
-        }
-    );
+    res.json({
+      source: "mysql",
+      data: results,
+    });
+  });
 };
 exports.getBuildingById = (req, res) => {       // so that a frontend will find the building using id only
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "SELECT * FROM buildings WHERE id = ?",
     [id],
     (err, results) => {
@@ -95,7 +96,7 @@ exports.updateBuilding = (req, res) => {        //so that admin can update buldi
     WHERE id = ?
   `;
 
-  db.query(
+  pool.query(
     sql,
     [building_name, address, total_floors, total_flats, id],
     (err) => {
@@ -112,7 +113,7 @@ exports.updateBuilding = (req, res) => {        //so that admin can update buldi
 exports.deleteBuilding = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "DELETE FROM buildings WHERE id = ?",
     [id],
     (err) => {

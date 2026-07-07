@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 exports.createPayment = (req, res) => {
   const {
@@ -38,7 +38,7 @@ exports.createPayment = (req, res) => {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       tenant_id,
@@ -72,7 +72,7 @@ exports.getAllPayments = (req, res) => {
     ORDER BY rent_payments.id DESC
   `;
 
-  db.query(sql, (err, results) => {
+  pool.query(sql, (err, results) => {
     if (err) return res.status(500).json(err);
     res.json(results);
   });
@@ -80,7 +80,7 @@ exports.getAllPayments = (req, res) => {
 exports.getPaymentById = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "SELECT * FROM rent_payments WHERE id = ?",
     [id],
     (err, results) => {
@@ -116,7 +116,7 @@ exports.updatePayment = (req, res) => {
     WHERE id=?
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       tenant_id,
@@ -141,7 +141,7 @@ exports.updatePayment = (req, res) => {
 exports.deletePayment = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "DELETE FROM rent_payments WHERE id = ?",
     [id],
     (err) => {

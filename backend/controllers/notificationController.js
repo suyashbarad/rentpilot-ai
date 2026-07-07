@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 exports.createNotification = (req, res) => {
   const {
@@ -27,7 +27,7 @@ exports.createNotification = (req, res) => {
     VALUES (?, ?, ?, ?, ?)
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       tenant_id,
@@ -60,7 +60,7 @@ exports.getAllNotifications = (req, res) => {
     ORDER BY notifications.id DESC
   `;
 
-  db.query(sql, (err, results) => {
+  pool.query(sql, (err, results) => {
     if (err) return res.status(500).json(err);
 
     res.json(results);
@@ -70,7 +70,7 @@ exports.getAllNotifications = (req, res) => {
 
 exports.getNotificationById = (req, res) => {
 
-  db.query(
+  pool.query(
     "SELECT * FROM notifications WHERE id=?",
     [req.params.id],
     (err, results) => {
@@ -100,7 +100,7 @@ exports.updateNotification = (req, res) => {
     sent_time
   } = req.body;
 
-  db.query(
+  pool.query(
     `UPDATE notifications
      SET tenant_id=?, title=?, message=?, status=?, sent_time=?
      WHERE id=?`,
@@ -127,7 +127,7 @@ exports.updateNotification = (req, res) => {
 
 exports.deleteNotification = (req, res) => {
 
-  db.query(
+  pool.query(
     "DELETE FROM notifications WHERE id=?",
     [req.params.id],
     (err) => {

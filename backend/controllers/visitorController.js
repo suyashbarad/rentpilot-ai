@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 exports.createVisitor = (req, res) => {
   const {
@@ -34,7 +34,7 @@ exports.createVisitor = (req, res) => {
     VALUES (?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       tenant_id,
@@ -66,7 +66,7 @@ exports.getAllVisitors = (req, res) => {
     ORDER BY visitors.id DESC
   `;
 
-  db.query(sql, (err, results) => {
+  pool.query(sql, (err, results) => {
     if (err) return res.status(500).json(err);
 
     res.json(results);
@@ -75,7 +75,7 @@ exports.getAllVisitors = (req, res) => {
 exports.getVisitorById = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "SELECT * FROM visitors WHERE id = ?",
     [id],
     (err, results) => {
@@ -115,7 +115,7 @@ exports.updateVisitor = (req, res) => {
     WHERE id=?
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       tenant_id,
@@ -138,7 +138,7 @@ exports.updateVisitor = (req, res) => {
 exports.deleteVisitor = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "DELETE FROM visitors WHERE id = ?",
     [id],
     (err) => {

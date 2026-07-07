@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 exports.getDashboardStats = async (req, res) => {
   try {
@@ -18,7 +18,7 @@ exports.getDashboardStats = async (req, res) => {
       queries.map(
         query =>
           new Promise((resolve, reject) => {
-            db.query(query, (err, result) => {
+            pool.query(query, (err, result) => {
               if (err) reject(err);
               else resolve(result[0]);
             });
@@ -81,7 +81,7 @@ exports.getDashboardAnalytics = (req, res) => {
     queries.map(query =>
       new Promise((resolve, reject) => {
 
-        db.query(query, (err, result) => {
+        pool.query(query, (err, result) => {
 
           if (err) reject(err);
           else resolve(result[0]);

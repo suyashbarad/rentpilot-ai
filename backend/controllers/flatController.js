@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 exports.createFlat = (req, res) => {
   const {
@@ -28,7 +28,7 @@ exports.createFlat = (req, res) => {
     VALUES (?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       building_id,
@@ -60,7 +60,7 @@ exports.getAllFlats = (req, res) => {
     ORDER BY flats.id DESC
   `;
 
-  db.query(sql, (err, results) => {
+  pool.query(sql, (err, results) => {
     if (err) {
       return res.status(500).json(err);
     }
@@ -71,7 +71,7 @@ exports.getAllFlats = (req, res) => {
 exports.getFlatById = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "SELECT * FROM flats WHERE id = ?",
     [id],
     (err, results) => {
@@ -106,7 +106,7 @@ exports.updateFlat = (req, res) => {
     WHERE id = ?
   `;
 
-  db.query(
+  pool.query(
     sql,
     [building_id, flat_number, floor, rent_amount, deposit, status, id],
     (err) => {
@@ -123,7 +123,7 @@ exports.updateFlat = (req, res) => {
 exports.deleteFlat = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "DELETE FROM flats WHERE id = ?",
     [id],
     (err) => {

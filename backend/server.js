@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const logger = require("./utils/logger");
 const app = require("./app");
+
 const requiredEnv = [
   "DB_HOST",
   "DB_USER",
@@ -15,8 +16,9 @@ requiredEnv.forEach((env) => {
     throw new Error(`Missing environment variable: ${env}`);
   }
 });
-// Connect to MySQL
-require("./config/db");
+
+require("./config/db");      // MySQL
+require("./config/redis");   // Redis
 
 const PORT = process.env.PORT || 5001;
 

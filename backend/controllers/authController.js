@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 // Register Admin
 exports.register = async (req, res) => {
@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
       VALUES (?, ?, ?)
     `;
 
-    db.query(sql, [full_name, email, hashedPassword], (err, result) => {
+    pool.query(sql, [full_name, email, hashedPassword], (err, result) => {
       if (err) {
         return res.status(500).json(err);
       }
@@ -47,7 +47,7 @@ exports.login = (req, res) => {
 
   const sql = "SELECT * FROM admins WHERE email = ?";
 
-  db.query(sql, [email], async (err, results) => {
+  pool.query(sql, [email], async (err, results) => {
     if (err) {
       return res.status(500).json(err);
     }

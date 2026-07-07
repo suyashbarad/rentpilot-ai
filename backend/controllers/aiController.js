@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 exports.getInsights = (req, res) => {
 
@@ -19,7 +19,7 @@ exports.getInsights = (req, res) => {
         queries.map(query =>
             new Promise((resolve, reject) => {
 
-                db.query(query, (err, result) => {
+                pool.query(query, (err, result) => {
 
                     if (err) reject(err);
                     else resolve(result[0]);

@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 exports.createComplaint = (req, res) => {
   const {
@@ -31,7 +31,7 @@ exports.createComplaint = (req, res) => {
     VALUES (?, ?, ?, ?, ?)
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       tenant_id,
@@ -62,7 +62,7 @@ exports.getAllComplaints = (req, res) => {
     ORDER BY complaints.id DESC
   `;
 
-  db.query(sql, (err, results) => {
+  pool.query(sql, (err, results) => {
     if (err) return res.status(500).json(err);
     res.json(results);
   });
@@ -70,7 +70,7 @@ exports.getAllComplaints = (req, res) => {
 exports.getComplaintById = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "SELECT * FROM complaints WHERE id = ?",
     [id],
     (err, results) => {
@@ -103,7 +103,7 @@ exports.updateComplaint = (req, res) => {
     WHERE id=?
   `;
 
-  db.query(
+  pool.query(
     sql,
     [
       tenant_id,
@@ -125,7 +125,7 @@ exports.updateComplaint = (req, res) => {
 exports.deleteComplaint = (req, res) => {
   const { id } = req.params;
 
-  db.query(
+  pool.query(
     "DELETE FROM complaints WHERE id = ?",
     [id],
     (err) => {

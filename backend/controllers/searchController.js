@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const { pool } = require("../config/db");
 
 exports.globalSearch = (req, res) => {
 
@@ -48,7 +48,7 @@ exports.globalSearch = (req, res) => {
 
         new Promise((resolve,reject)=>{
 
-            db.query(
+            pool.query(
                 queries.buildings,
                 [keyword],
                 (err,result)=>{
@@ -63,7 +63,7 @@ exports.globalSearch = (req, res) => {
 
         new Promise((resolve,reject)=>{
 
-            db.query(
+            pool.query(
                 queries.flats,
                 [keyword],
                 (err,result)=>{
@@ -78,7 +78,7 @@ exports.globalSearch = (req, res) => {
 
         new Promise((resolve,reject)=>{
 
-            db.query(
+            pool.query(
                 queries.tenants,
                 [keyword],
                 (err,result)=>{
@@ -93,7 +93,7 @@ exports.globalSearch = (req, res) => {
 
         new Promise((resolve,reject)=>{
 
-            db.query(
+            pool.query(
                 queries.visitors,
                 [keyword],
                 (err,result)=>{

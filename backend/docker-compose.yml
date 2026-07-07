@@ -41,6 +41,12 @@ services:
       DB_PASSWORD: Mohini*#007
       DB_NAME: rentpilot_ai
       JWT_SECRET: RentPilotAI@2026
+  redis:
+    image: redis:7-alpine
+    container_name: rentpilot-redis
+    restart: always
 
+    ports:
+    - "6379:6379"
 volumes:
   mysql_data:
