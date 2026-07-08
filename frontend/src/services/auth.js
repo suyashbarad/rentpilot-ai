@@ -1,22 +1,22 @@
 import api from "./api";
 
-export const login = async (email, password) => {
-  const response = await api.post("/auth/login", {
-    email,
-    password,
-  });
-
+const login = async (data) => {
+  const response = await api.post("/auth/login", data);
   return response.data;
 };
 
-export const saveToken = (token) => {
-  localStorage.setItem("token", token);
-};
-
-export const getToken = () => {
+const getToken = () => {
   return localStorage.getItem("token");
 };
 
-export const logout = () => {
+const logout = () => {
   localStorage.removeItem("token");
 };
+
+export default {
+  login,
+  getToken,
+  logout,
+};
+
+export { login, getToken, logout };

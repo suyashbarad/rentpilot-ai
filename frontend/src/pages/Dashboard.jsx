@@ -1,5 +1,29 @@
-const Login = () => {
-  return <h1>Login Page</h1>;
-};
+import { useNavigate } from "react-router-dom";
 
-export default Login;
+export default function Dashboard() {
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+
+    localStorage.removeItem("token");
+
+    navigate("/login");
+
+  };
+
+  return (
+
+    <div>
+
+      <h1>Dashboard</h1>
+
+      <button onClick={logout}>
+        Logout
+      </button>
+
+    </div>
+
+  );
+
+}

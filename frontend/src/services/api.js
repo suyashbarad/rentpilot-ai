@@ -1,14 +1,11 @@
 import axios from "axios";
-import { BASE_URL } from "../config/api";
 
 const api = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: "http://localhost:5001/api"
 });
 
 api.interceptors.request.use((config) => {
+
   const token = localStorage.getItem("token");
 
   if (token) {
@@ -16,6 +13,7 @@ api.interceptors.request.use((config) => {
   }
 
   return config;
+
 });
 
 export default api;
