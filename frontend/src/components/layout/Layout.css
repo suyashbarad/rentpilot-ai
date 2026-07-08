@@ -1,0 +1,13 @@
+.layout {
+  display: flex;
+}
+
+.main {
+  flex: 1;
+  background: #f5f7fa;
+  min-height: 100vh;
+}
+
+.content {
+  padding: 25px;
+}

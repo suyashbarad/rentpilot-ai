@@ -1,29 +1,38 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import Layout from "../components/layout/Layout";
+import DashboardCards from "../components/dashboard/DashboardCards";
+import dashboardService from "../services/dashboard";
 
 export default function Dashboard() {
 
-  const navigate = useNavigate();
+  const [data, setData] = useState({
+    totalBuildings: 0,
+    totalFlats: 0,
+    totalTenants: 0,
+    pendingComplaints: 0,
+  });
 
-  const logout = () => {
+  useEffect(() => {
+    loadDashboard();
+  }, []);
 
-    localStorage.removeItem("token");
-
-    navigate("/login");
-
+  const loadDashboard = async () => {
+    try {
+      const res = await dashboardService.getDashboard();
+      setData(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-
-    <div>
+    <Layout>
 
       <h1>Dashboard</h1>
 
-      <button onClick={logout}>
-        Logout
-      </button>
+      <DashboardCards data={data} />
 
-    </div>
-
+    </Layout>
   );
-
 }
