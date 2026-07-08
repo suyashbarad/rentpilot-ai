@@ -1,5 +1,6 @@
 const mysql = require("mysql2");
 const logger = require("../utils/logger");
+
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -11,45 +12,27 @@ const pool = mysql.createPool({
   queueLimit: 0,
   ssl:
     process.env.DB_SSL === "true"
-      ? {
-          rejectUnauthorized: false,
-        }
+      ? { rejectUnauthorized: false }
       : undefined,
 });
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
 
-  connection.query("SELECT DATABASE() AS db", (err, result) => {
-    console.log("Connected Database:", result);
-    connection.release();
-  });
-});
+function connectDB() {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      logger.error(err.message);
+      return;
+    }
 
-function connectWithRetry() {
-  function connectDB() {
-    pool.getConnection((err, connection) => {
+    logger.info("✅ MySQL Pool Connected");
 
-        if (err) {
-            logger.error(err.message);
-            return;
-        }
-
-        logger.info("✅ MySQL Pool Connected");
-
-        connection.release();
-
+    connection.query("SELECT DATABASE() AS db", (err, result) => {
+      if (!err) console.log("Connected Database:", result);
+      connection.release();
     });
+  });
 }
 
 module.exports = {
-    pool,
-    connectDB
+  pool,
+  connectDB,
 };
-}
-
-connectWithRetry();
-module.exports = pool;
-// module.exports = connection;

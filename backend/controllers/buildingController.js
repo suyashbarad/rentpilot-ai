@@ -52,7 +52,7 @@ exports.getAllBuildings = async (req, res) => {
     });
   }
 
-  db.query("SELECT * FROM buildings", async (err, results) => {
+  pool.query("SELECT * FROM buildings", async (err, results) => {
     if (err) return res.status(500).json(err);
 
     await redisClient.set("buildings", JSON.stringify(results), {
@@ -123,6 +123,24 @@ exports.deleteBuilding = (req, res) => {
 
       res.json({
         message: "Building deleted successfully"
+      });
+    }
+  );
+};
+exports.searchBuildings = (req, res) => {
+  console.log("✅ Search route called");
+
+  const keyword = req.query.keyword || "";
+
+  pool.query(
+    "SELECT * FROM buildings WHERE building_name LIKE ?",
+    [`%${keyword}%`],
+    (err, results) => {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+        success: true,
+        data: results
       });
     }
   );

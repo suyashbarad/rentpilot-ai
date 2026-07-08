@@ -58,7 +58,11 @@ router.post(
  */
 
 router.get("/", authMiddleware, buildingController.getAllBuildings);        //adding one by function which is used in buildingController
-
+router.get(
+  "/search",
+  authMiddleware,
+  buildingController.searchBuildings
+);
 /**
  * @swagger
  * /api/buildings/{id}:

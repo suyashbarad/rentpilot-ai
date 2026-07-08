@@ -55,10 +55,10 @@ app.get("/health", (req, res) => {
   });
 });
 
-const db = require("./config/db");
+const { pool } = require("./config/db");
 
 app.get("/ready", (req, res) => {
-  db.query("SELECT 1", (err) => {
+  pool.query("SELECT 1", (err) => {
     if (err) {
       return res.status(503).json({
         status: "NOT READY",
