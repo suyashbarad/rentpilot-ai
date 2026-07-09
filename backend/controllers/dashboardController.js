@@ -112,3 +112,78 @@ exports.getDashboardAnalytics = (req, res) => {
   });
 
 };
+exports.getRecentActivity = (req, res) => {
+
+  const recentPayments = `
+    SELECT
+      users.name,
+      rent_payments.amount,
+      rent_payments.payment_status,
+      rent_payments.payment_date
+    FROM rent_payments
+    JOIN tenants
+      ON rent_payments.tenant_id = tenants.id
+    JOIN users
+      ON tenants.user_id = users.id
+    ORDER BY rent_payments.id DESC
+    LIMIT 5
+  `;
+
+  const recentComplaints = `
+    SELECT
+      users.name,
+      complaints.title,
+      complaints.status
+    FROM complaints
+    JOIN tenants
+      ON complaints.tenant_id = tenants.id
+    JOIN users
+      ON tenants.user_id = users.id
+    ORDER BY complaints.id DESC
+    LIMIT 5
+  `;
+
+  Promise.all([
+
+    new Promise((resolve, reject) => {
+
+      pool.query(recentPayments, (err, result) => {
+
+        if (err) reject(err);
+        else resolve(result);
+
+      });
+
+    }),
+
+    new Promise((resolve, reject) => {
+
+      pool.query(recentComplaints, (err, result) => {
+
+        if (err) reject(err);
+        else resolve(result);
+
+      });
+
+    })
+
+  ])
+
+  .then(results => {
+
+    res.json({
+
+      payments: results[0],
+      complaints: results[1]
+
+    });
+
+  })
+
+  .catch(err => {
+
+    res.status(500).json(err);
+
+  });
+
+};

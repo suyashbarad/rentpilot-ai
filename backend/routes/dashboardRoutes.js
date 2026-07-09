@@ -38,4 +38,10 @@ router.get(
   dashboardController.getDashboardAnalytics
 );
 
+router.get(
+  "/recent",
+  authMiddleware,
+  dashboardController.getRecentActivity
+);
+
 module.exports = router;

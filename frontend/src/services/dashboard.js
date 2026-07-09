@@ -1,25 +1,28 @@
 import api from "./api";
 
 const getDashboard = async () => {
-
-const res=await api.get("/dashboard");
-
-return res.data;
-
+  const response = await api.get("/dashboard");
+  return response.data;
 };
 
-const getAnalytics = async()=>{
-
-const res=await api.get("/dashboard/analytics");
-
-return res.data;
-
+const getAnalytics = async () => {
+  const response = await api.get("/dashboard/analytics");
+  return response.data;
 };
 
-export default{
+const getRecent = async () => {
+  const response = await api.get("/dashboard/recent");
+  return response.data;
+};
 
-getDashboard,
+const getInsights = async () => {
+  const response = await api.get("/ai/insights");
+  return response.data;
+};
 
-getAnalytics
-
+export default {
+  getDashboard,
+  getAnalytics,
+  getRecent,
+  getInsights
 };
