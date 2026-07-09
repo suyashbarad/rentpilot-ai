@@ -1,0 +1,10 @@
+.flats-container{
+    padding:30px;
+}
+
+.flats-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}

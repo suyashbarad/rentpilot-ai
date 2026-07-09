@@ -1,0 +1,24 @@
+.notification-form{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.notification-form input{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.notification-form button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.notification-form button:hover{
+    background:#1d4ed8;
+}

@@ -1,17 +1,17 @@
-form {
+.building-form {
   display: grid;
-  grid-template-columns: repeat(4, 1fr) auto;
-  gap: 15px;
-  margin-bottom: 30px;
+  grid-template-columns:repeat(5,1fr) auto;
+    gap:15px;
+    margin-bottom:25px;
 }
 
-form input {
+.building-form input {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
 }
 
-form button {
+.building-form button {
   background: #2563eb;
   color: white;
   border: none;
@@ -19,6 +19,6 @@ form button {
   cursor: pointer;
 }
 
-form button:hover {
+.building-form button:hover {
   background: #1d4ed8;
 }

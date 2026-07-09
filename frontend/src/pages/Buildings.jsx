@@ -9,7 +9,9 @@ export default function Buildings() {
     <Layout>
       <div className="buildings-container">
 
-        <h2>Buildings Management</h2>
+        <div className="buildings-header">
+          <h2>Buildings Management</h2>
+        </div>
 
         <AddBuildingForm />
 

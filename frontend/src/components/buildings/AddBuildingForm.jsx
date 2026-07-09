@@ -34,7 +34,10 @@ export default function AddBuildingForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+      <form
+        className="building-form"
+        onSubmit={handleSubmit}
+      >
 
       <input
         name="building_name"

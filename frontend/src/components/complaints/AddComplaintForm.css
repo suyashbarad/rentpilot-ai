@@ -1,0 +1,25 @@
+.complaint-form{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.complaint-form input,
+.complaint-form select{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.complaint-form button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.complaint-form button:hover{
+    background:#1d4ed8;
+}

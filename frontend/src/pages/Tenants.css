@@ -1,0 +1,10 @@
+.tenants-container{
+    padding:30px;
+}
+
+.tenants-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}

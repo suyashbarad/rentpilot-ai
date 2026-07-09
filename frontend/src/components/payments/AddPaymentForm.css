@@ -1,0 +1,29 @@
+.payment-form{
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.payment-form input{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.payment-form button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.payment-form button:hover{
+    background:#1d4ed8;
+}
+.payment-form select{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
