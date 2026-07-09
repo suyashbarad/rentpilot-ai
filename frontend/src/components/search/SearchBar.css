@@ -1,0 +1,25 @@
+.search-box{
+    display:flex;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.search-box input{
+    flex:1;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.search-box button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+}
+
+.search-box button:hover{
+    background:#1d4ed8;
+}
