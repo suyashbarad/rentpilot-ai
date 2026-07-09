@@ -1,67 +1,83 @@
+import { useNavigate } from "react-router-dom";
+
 import {
   FaBuilding,
   FaDoorOpen,
   FaUsers,
-  FaMoneyBillWave
+  FaMoneyBillWave,
+  FaClipboardList,
+  FaBell
 } from "react-icons/fa";
 
 import "./QuickActions.css";
 
 export default function QuickActions() {
 
+  const navigate = useNavigate();
+
   const actions = [
 
     {
-      title: "Add Building",
+      title: "Buildings",
       icon: <FaBuilding />,
-      color: "#2563eb"
+      path: "/buildings"
     },
 
     {
-      title: "Add Flat",
+      title: "Flats",
       icon: <FaDoorOpen />,
-      color: "#7c3aed"
+      path: "/flats"
     },
 
     {
-      title: "Add Tenant",
+      title: "Tenants",
       icon: <FaUsers />,
-      color: "#16a34a"
+      path: "/tenants"
     },
 
     {
-      title: "Record Payment",
+      title: "Payments",
       icon: <FaMoneyBillWave />,
-      color: "#f59e0b"
+      path: "/payments"
+    },
+
+    {
+      title: "Complaints",
+      icon: <FaClipboardList />,
+      path: "/complaints"
+    },
+
+    {
+      title: "Notifications",
+      icon: <FaBell />,
+      path: "/notifications"
     }
 
   ];
 
   return (
 
-    <div className="quick-card">
+    <div className="quick-actions">
 
       <h2>Quick Actions</h2>
 
       <div className="quick-grid">
 
-        {actions.map((item, index) => (
+        {actions.map((action) => (
 
           <button
-            key={index}
-            className="quick-btn"
+            key={action.title}
+            className="quick-card"
+            onClick={() => navigate(action.path)}
           >
 
-            <span
-              className="quick-icon"
-              style={{
-                background: item.color
-              }}
-            >
-              {item.icon}
-            </span>
+            <div className="quick-icon">
 
-            <span>{item.title}</span>
+              {action.icon}
+
+            </div>
+
+            <span>{action.title}</span>
 
           </button>
 
