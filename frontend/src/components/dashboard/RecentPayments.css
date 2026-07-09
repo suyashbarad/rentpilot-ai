@@ -1,13 +1,32 @@
 .recent-card{
 
-background:white;
+background:rgb(112, 98, 98);
 
-padding:20px;
+padding:25px;
 
-border-radius:15px;
+border-radius:16px;
 
-box-shadow:0 8px 18px rgba(0,0,0,.08);
+box-shadow:0 10px 25px rgba(0,0,0,.08);
 
-min-height:320px;
+}
+
+.recent-card table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:20px;
+
+}
+
+.recent-card th,
+.recent-card td{
+
+padding:12px;
+
+border-bottom:1px solid #eee;
+
+text-align:left;
 
 }

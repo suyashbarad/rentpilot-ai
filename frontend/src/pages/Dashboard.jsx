@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 
 import Layout from "../components/layout/Layout";
 
-import DashboardHeader from "../components/dashboard/DashboardHeader";
-import StatCards from "../components/dashboard/StatCards";
-import RevenueChart from "../components/dashboard/RevenueChart";
-import OccupancyChart from "../components/dashboard/OccupancyChart";
-import RecentPayments from "../components/dashboard/RecentPayments";
-import RecentComplaints from "../components/dashboard/RecentComplaints";
+import StatCard from "../components/dashboard/StatCard";
+import RevenueCard from "../components/dashboard/RevenueCard";
+import OccupancyCard from "../components/dashboard/OccupancyCard";
 import AIInsightsCard from "../components/dashboard/AIInsightsCard";
 import QuickActions from "../components/dashboard/QuickActions";
+import RecentPayments from "../components/dashboard/RecentPayments";
+import RecentComplaints from "../components/dashboard/RecentComplaints";
 
 import dashboardService from "../services/dashboard";
 
@@ -19,6 +18,11 @@ export default function Dashboard() {
 
   const [stats, setStats] = useState({});
   const [analytics, setAnalytics] = useState({});
+  const [recent, setRecent] = useState({
+    payments: [],
+    complaints: []
+  });
+  const [insights, setInsights] = useState([]);
 
   useEffect(() => {
     loadDashboard();
@@ -28,14 +32,24 @@ export default function Dashboard() {
 
     try {
 
-      const statsRes =
-        await dashboardService.getDashboard();
+      const [
+        statsRes,
+        analyticsRes,
+        recentRes,
+        insightsRes
+      ] = await Promise.all([
 
-      const analyticsRes =
-        await dashboardService.getAnalytics();
+        dashboardService.getDashboard(),
+        dashboardService.getAnalytics(),
+        dashboardService.getRecent(),
+        dashboardService.getInsights()
+
+      ]);
 
       setStats(statsRes);
       setAnalytics(analyticsRes);
+      setRecent(recentRes);
+      setInsights(insightsRes);
 
     } catch (err) {
 
@@ -51,34 +65,42 @@ export default function Dashboard() {
 
       <div className="dashboard-page">
 
-        <DashboardHeader />
+        <h1 className="dashboard-title">
 
-        <StatCards
+          RentPilot AI Dashboard
+
+        </h1>
+
+        <StatCard
           stats={stats}
           analytics={analytics}
         />
 
-        <div className="dashboard-row">
+        <div className="dashboard-grid">
 
-          <RevenueChart analytics={analytics} />
+          <RevenueCard analytics={analytics} />
 
-          <AIInsightsCard />
-
-        </div>
-
-        <div className="dashboard-row">
-
-          <RecentPayments />
-
-          <RecentComplaints />
+          <OccupancyCard analytics={analytics} />
 
         </div>
 
-        <div className="dashboard-row">
+        <div className="dashboard-grid">
 
-          <OccupancyChart stats={stats} />
+          <AIInsightsCard insights={insights} />
 
           <QuickActions />
+
+        </div>
+
+        <div className="dashboard-grid">
+
+          <RecentPayments
+            payments={recent.payments}
+          />
+
+          <RecentComplaints
+            complaints={recent.complaints}
+          />
 
         </div>
 

@@ -1,25 +1,51 @@
 import "./RecentPayments.css";
 
-export default function RecentPayments(){
+export default function RecentPayments({ payments }) {
 
-return(
+  return (
 
-<div className="recent-card">
+    <div className="recent-card">
 
-<h2>
+      <h2>Recent Payments</h2>
 
-Recent Payments
+      <table>
 
-</h2>
+        <thead>
 
-<p>
+          <tr>
 
-This widget will show the latest payments.
+            <th>Tenant</th>
 
-</p>
+            <th>Amount</th>
 
-</div>
+            <th>Status</th>
 
-);
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {(payments || []).map((payment,index)=>(
+
+            <tr key={index}>
+
+              <td>{payment.name}</td>
+
+              <td>₹ {payment.amount}</td>
+
+              <td>{payment.payment_status}</td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  );
 
 }

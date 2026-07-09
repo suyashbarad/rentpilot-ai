@@ -1,0 +1,37 @@
+.revenue-card{
+
+background:white;
+
+padding:25px;
+
+border-radius:16px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.revenue-card h2{
+
+margin-bottom:20px;
+
+}
+
+.revenue-row{
+
+padding:15px 0;
+
+border-bottom:1px solid #eee;
+
+}
+
+.revenue-row:last-child{
+
+border:none;
+
+}
+
+.pending{
+
+color:#dc2626;
+
+}

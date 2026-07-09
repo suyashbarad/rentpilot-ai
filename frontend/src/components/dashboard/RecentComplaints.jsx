@@ -1,25 +1,51 @@
 import "./RecentComplaints.css";
 
-export default function RecentComplaints(){
+export default function RecentComplaints({ complaints }) {
 
-return(
+  return (
 
-<div className="recent-card">
+    <div className="recent-card">
 
-<h2>
+      <h2>Recent Complaints</h2>
 
-Recent Complaints
+      <table>
 
-</h2>
+        <thead>
 
-<p>
+          <tr>
 
-Latest complaints will appear here.
+            <th>Tenant</th>
 
-</p>
+            <th>Title</th>
 
-</div>
+            <th>Status</th>
 
-);
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {(complaints || []).map((complaint,index)=>(
+
+            <tr key={index}>
+
+              <td>{complaint.name}</td>
+
+              <td>{complaint.title}</td>
+
+              <td>{complaint.status}</td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  );
 
 }
