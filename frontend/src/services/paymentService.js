@@ -1,15 +1,19 @@
 import api from "./api";
 
-const getPayments = () => api.get("/payments");
+const getAll = () => api.get("/payments");
 
-const createPayment = (data) =>
+const create = (data) =>
   api.post("/payments", data);
 
-const deletePayment = (id) =>
+const update = (id, data) =>
+  api.put(`/payments/${id}`, data);
+
+const remove = (id) =>
   api.delete(`/payments/${id}`);
 
 export default {
-  getPayments,
-  createPayment,
-  deletePayment
+  getAll,
+  create,
+  update,
+  remove,
 };

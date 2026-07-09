@@ -1,18 +1,24 @@
-import "./ComplaintTable.css";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 import complaintService from "../../services/complaintService";
 
+import EditComplaintModal from "./EditComplaintModal";
+
+import "./ComplaintTable.css";
+
 export default function ComplaintTable({
   complaints,
-  refresh
+  refresh,
 }) {
+
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
 
   const handleDelete = async (id) => {
 
-    if(!window.confirm("Delete complaint?")) return;
+    if (!window.confirm("Delete this complaint?")) return;
 
-    try{
+    try {
 
       await complaintService.remove(id);
 
@@ -20,7 +26,7 @@ export default function ComplaintTable({
 
       refresh();
 
-    }catch{
+    } catch {
 
       toast.error("Delete failed");
 
@@ -28,68 +34,83 @@ export default function ComplaintTable({
 
   };
 
-  return(
+  return (
 
-    <table className="complaint-table">
+    <>
 
-      <thead>
+      <table className="complaint-table">
 
-        <tr>
+        <thead>
 
-          <th>ID</th>
+          <tr>
 
-          <th>Tenant</th>
-
-          <th>Flat</th>
-
-          <th>Title</th>
-
-          <th>Priority</th>
-
-          <th>Status</th>
-
-          <th>Action</th>
-
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-        {complaints.map((complaint)=>(
-
-          <tr key={complaint.id}>
-
-            <td>{complaint.id}</td>
-
-            <td>{complaint.name}</td>
-
-            <td>{complaint.flat_number}</td>
-
-            <td>{complaint.title}</td>
-
-            <td>{complaint.priority}</td>
-
-            <td>{complaint.status}</td>
-
-            <td>
-
-              <button
-                className="delete-btn"
-                onClick={()=>handleDelete(complaint.id)}
-              >
-                Delete
-              </button>
-
-            </td>
+            <th>ID</th>
+            <th>Tenant</th>
+            <th>Flat</th>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Action</th>
 
           </tr>
 
-        ))}
+        </thead>
 
-      </tbody>
+        <tbody>
 
-    </table>
+          {complaints.map((complaint) => (
+
+            <tr key={complaint.id}>
+
+              <td>{complaint.id}</td>
+
+              <td>{complaint.name}</td>
+
+              <td>{complaint.flat_number}</td>
+
+              <td>{complaint.title}</td>
+
+              <td>{complaint.priority}</td>
+
+              <td>{complaint.status}</td>
+
+              <td>
+
+                <button
+                  className="edit-btn"
+                  onClick={() => setSelectedComplaint(complaint)}
+                >
+                  Edit
+                </button>
+
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(complaint.id)}
+                >
+                  Delete
+                </button>
+
+              </td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
+
+      {selectedComplaint && (
+
+        <EditComplaintModal
+          complaint={selectedComplaint}
+          refresh={refresh}
+          onClose={() => setSelectedComplaint(null)}
+        />
+
+      )}
+
+    </>
 
   );
 

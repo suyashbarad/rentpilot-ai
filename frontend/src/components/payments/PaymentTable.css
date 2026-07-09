@@ -1,37 +1,52 @@
-.payments-table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
+.payment-table {
+  width: 100%;
+  margin-top: 25px;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 18px rgba(0,0,0,.08);
 }
 
-.payments-table th{
-    background:#2563eb;
-    color:white;
-    padding:15px;
-    text-align:left;
+.payment-table thead {
+  background: #2563eb;
+  color: white;
 }
 
-.payments-table td{
-    padding:15px;
-    border-bottom:1px solid #eee;
+.payment-table th,
+.payment-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
 }
 
-.payments-table tr:hover{
-    background:#f8fafc;
+.payment-table tbody tr:hover {
+  background: #f8fafc;
 }
 
-.delete-btn{
-    background:#ef4444;
-    color:white;
-    border:none;
-    padding:8px 14px;
-    border-radius:6px;
-    cursor:pointer;
+.edit-btn {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
-.delete-btn:hover{
-    background:#dc2626;
+.edit-btn:hover {
+  background: #16a34a;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
 }

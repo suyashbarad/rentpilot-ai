@@ -31,3 +31,16 @@
     border-radius:6px;
     cursor:pointer;
 }
+.edit-btn{
+background:#22c55e;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:6px;
+cursor:pointer;
+margin-right:10px;
+}
+
+.edit-btn:hover{
+background:#16a34a;
+}

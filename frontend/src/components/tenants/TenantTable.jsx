@@ -1,8 +1,15 @@
-import "./TenantTable.css";
+import { useState } from "react";
 import toast from "react-hot-toast";
+
 import tenantService from "../../services/tenant";
 
+import EditTenantModal from "./EditTenantModal";
+
+import "./TenantTable.css";
+
 export default function TenantTable({ tenants, refresh }) {
+
+  const [selectedTenant, setSelectedTenant] = useState(null);
 
   const handleDelete = async (id) => {
 
@@ -26,53 +33,76 @@ export default function TenantTable({ tenants, refresh }) {
 
   return (
 
-    <table className="tenant-table">
+    <>
 
-      <thead>
+      <table className="tenant-table">
 
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Flat</th>
-          <th>Occupation</th>
-          <th>Family</th>
-          <th>Joining</th>
-          <th>Agreement End</th>
-          <th>Action</th>
-        </tr>
+        <thead>
 
-      </thead>
-
-      <tbody>
-
-        {tenants.map((tenant) => (
-
-          <tr key={tenant.id}>
-
-            <td>{tenant.id}</td>
-            <td>{tenant.name}</td>
-            <td>{tenant.flat_number}</td>
-            <td>{tenant.occupation}</td>
-            <td>{tenant.family_members}</td>
-            <td>{tenant.joining_date}</td>
-            <td>{tenant.agreement_end}</td>
-
-            <td>
-              <button
-                className="delete-btn"
-                onClick={() => handleDelete(tenant.id)}
-              >
-                Delete
-              </button>
-            </td>
-
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Flat ID</th>
+            <th>Action</th>
           </tr>
 
-        ))}
+        </thead>
 
-      </tbody>
+        <tbody>
 
-    </table>
+          {tenants.map((tenant) => (
+
+            <tr key={tenant.id}>
+
+              <td>{tenant.id}</td>
+
+              <td>{tenant.name}</td>
+
+              <td>{tenant.email}</td>
+
+              <td>{tenant.phone}</td>
+
+              <td>{tenant.flat_id}</td>
+
+              <td>
+
+                <button
+                  className="edit-btn"
+                  onClick={() => setSelectedTenant(tenant)}
+                >
+                  Edit
+                </button>
+
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(tenant.id)}
+                >
+                  Delete
+                </button>
+
+              </td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
+
+      {selectedTenant && (
+
+        <EditTenantModal
+          tenant={selectedTenant}
+          refresh={refresh}
+          onClose={() => setSelectedTenant(null)}
+        />
+
+      )}
+
+    </>
 
   );
 

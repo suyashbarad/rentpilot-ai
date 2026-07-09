@@ -1,38 +1,91 @@
 import { useEffect, useState } from "react";
 
 import Layout from "../components/layout/Layout";
-import DashboardCards from "../components/dashboard/DashboardCards";
+
+import DashboardHeader from "../components/dashboard/DashboardHeader";
+import StatCards from "../components/dashboard/StatCards";
+import RevenueChart from "../components/dashboard/RevenueChart";
+import OccupancyChart from "../components/dashboard/OccupancyChart";
+import RecentPayments from "../components/dashboard/RecentPayments";
+import RecentComplaints from "../components/dashboard/RecentComplaints";
+import AIInsightsCard from "../components/dashboard/AIInsightsCard";
+import QuickActions from "../components/dashboard/QuickActions";
+
 import dashboardService from "../services/dashboard";
+
+import "./Dashboard.css";
 
 export default function Dashboard() {
 
-  const [data, setData] = useState({
-    totalBuildings: 0,
-    totalFlats: 0,
-    totalTenants: 0,
-    pendingComplaints: 0,
-  });
+  const [stats, setStats] = useState({});
+  const [analytics, setAnalytics] = useState({});
 
   useEffect(() => {
     loadDashboard();
   }, []);
 
   const loadDashboard = async () => {
+
     try {
-      const res = await dashboardService.getDashboard();
-      setData(res);
+
+      const statsRes =
+        await dashboardService.getDashboard();
+
+      const analyticsRes =
+        await dashboardService.getAnalytics();
+
+      setStats(statsRes);
+      setAnalytics(analyticsRes);
+
     } catch (err) {
+
       console.log(err);
+
     }
+
   };
 
   return (
+
     <Layout>
 
-      <h1>Dashboard</h1>
+      <div className="dashboard-page">
 
-      <DashboardCards data={data} />
+        <DashboardHeader />
+
+        <StatCards
+          stats={stats}
+          analytics={analytics}
+        />
+
+        <div className="dashboard-row">
+
+          <RevenueChart analytics={analytics} />
+
+          <AIInsightsCard />
+
+        </div>
+
+        <div className="dashboard-row">
+
+          <RecentPayments />
+
+          <RecentComplaints />
+
+        </div>
+
+        <div className="dashboard-row">
+
+          <OccupancyChart stats={stats} />
+
+          <QuickActions />
+
+        </div>
+
+      </div>
 
     </Layout>
+
   );
+
 }

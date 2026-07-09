@@ -1,8 +1,14 @@
-import "./FlatTable.css";
+import { useState } from "react";
 import toast from "react-hot-toast";
+
 import flatService from "../../services/flat";
+import EditFlatModal from "./EditFlatModal";
+
+import "./FlatTable.css";
 
 export default function FlatTable({ flats, refresh }) {
+
+  const [selectedFlat, setSelectedFlat] = useState(null);
 
   const handleDelete = async (id) => {
 
@@ -26,61 +32,76 @@ export default function FlatTable({ flats, refresh }) {
 
   return (
 
-    <table className="flat-table">
+    <>
 
-      <thead>
+      <table className="flat-table">
 
-        <tr>
-          <th>ID</th>
-          <th>Building</th>
-          <th>Flat No.</th>
-          <th>Floor</th>
-          <th>Rent</th>
-          <th>Deposit</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
+        <thead>
 
-      </thead>
-
-      <tbody>
-
-        {flats.map((flat) => (
-
-          <tr key={flat.id}>
-
-            <td>{flat.id}</td>
-
-            <td>{flat.building_name}</td>
-
-            <td>{flat.flat_number}</td>
-
-            <td>{flat.floor}</td>
-
-            <td>₹ {flat.rent_amount}</td>
-
-            <td>₹ {flat.deposit}</td>
-
-            <td>{flat.status}</td>
-
-            <td>
-
-              <button
-                className="delete-btn"
-                onClick={() => handleDelete(flat.id)}
-              >
-                Delete
-              </button>
-
-            </td>
-
+          <tr>
+            <th>ID</th>
+            <th>Building</th>
+            <th>Flat No.</th>
+            <th>Floor</th>
+            <th>Rent</th>
+            <th>Deposit</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
 
-        ))}
+        </thead>
 
-      </tbody>
+        <tbody>
 
-    </table>
+          {flats.map((flat) => (
+
+            <tr key={flat.id}>
+
+              <td>{flat.id}</td>
+              <td>{flat.building_name}</td>
+              <td>{flat.flat_number}</td>
+              <td>{flat.floor}</td>
+              <td>₹ {flat.rent_amount}</td>
+              <td>₹ {flat.deposit}</td>
+              <td>{flat.status}</td>
+
+              <td>
+
+                <button
+                  className="edit-btn"
+                  onClick={() => setSelectedFlat(flat)}
+                >
+                  Edit
+                </button>
+
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(flat.id)}
+                >
+                  Delete
+                </button>
+
+              </td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
+
+      {selectedFlat && (
+
+        <EditFlatModal
+          flat={selectedFlat}
+          refresh={refresh}
+          onClose={() => setSelectedFlat(null)}
+        />
+
+      )}
+
+    </>
 
   );
 
