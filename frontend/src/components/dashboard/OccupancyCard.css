@@ -1,6 +1,6 @@
 .occupancy-card{
 
-background:white;
+background:#fff;
 
 padding:25px;
 
@@ -10,24 +10,146 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 
 }
 
-.progress{
+.occupancy-card h2{
 
-height:12px;
+margin-bottom:20px;
 
-background:#e5e7eb;
-
-border-radius:20px;
-
-overflow:hidden;
-
-margin-top:20px;
+font-size:22px;
 
 }
 
-.progress-fill{
+.occupancy-content{
 
-height:100%;
+display:flex;
 
-background:#22c55e;
+justify-content:space-between;
+
+align-items:center;
+
+gap:30px;
+
+flex-wrap:wrap;
+
+}
+
+.chart-box{
+
+position:relative;
+
+width:220px;
+
+height:220px;
+
+}
+
+.chart-center{
+
+position:absolute;
+
+top:50%;
+
+left:50%;
+
+transform:translate(-50%,-50%);
+
+text-align:center;
+
+}
+
+.chart-center h1{
+
+margin:0;
+
+font-size:34px;
+
+color:#2563eb;
+
+}
+
+.chart-center p{
+
+margin:0;
+
+color:#666;
+
+font-size:14px;
+
+}
+
+.occupancy-info{
+
+flex:1;
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+.info-row{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+font-size:16px;
+
+}
+
+.green-dot{
+
+width:12px;
+
+height:12px;
+
+border-radius:50%;
+
+background:#10b981;
+
+margin-right:10px;
+
+display:inline-block;
+
+}
+
+.orange-dot{
+
+width:12px;
+
+height:12px;
+
+border-radius:50%;
+
+background:#f97316;
+
+margin-right:10px;
+
+display:inline-block;
+
+}
+
+.total{
+
+margin-top:15px;
+
+padding-top:15px;
+
+border-top:1px solid #eee;
+
+font-weight:700;
+
+}
+
+@media(max-width:900px){
+
+.occupancy-content{
+
+justify-content:center;
+
+}
 
 }

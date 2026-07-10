@@ -1,37 +1,40 @@
-.revenue-card{
-
-background:white;
-
-padding:25px;
-
-border-radius:16px;
-
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-
+.revenue-card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Softer, wider shadow */
+  border: 1px solid #f3f4f6;
 }
 
-.revenue-card h2{
-
-margin-bottom:20px;
-
+.revenue-card h2 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* Adds a premium feel */
 }
 
-.revenue-row{
-
-padding:15px 0;
-
-border-bottom:1px solid #eee;
-
+.revenue-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #f3f4f6;
 }
 
-.revenue-row:last-child{
-
-border:none;
-
+.revenue-row:last-child {
+  border: none;
+  padding-bottom: 0;
 }
 
-.pending{
-
-color:#dc2626;
-
+/* Updated styling for the 'Pending' status */
+.pending {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import Layout from "../components/layout/Layout";
 
-import StatCard from "../components/dashboard/StatCard";
+import StatCard from "../components/dashboard/StatCards";
 import RevenueCard from "../components/dashboard/RevenueCard";
 import OccupancyCard from "../components/dashboard/OccupancyCard";
 import AIInsightsCard from "../components/dashboard/AIInsightsCard";
@@ -80,7 +80,7 @@ export default function Dashboard() {
 
           <RevenueCard analytics={analytics} />
 
-          <OccupancyCard analytics={analytics} />
+          <OccupancyCard stats={stats} />
 
         </div>
 

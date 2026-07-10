@@ -1,75 +1,64 @@
-.quick-actions{
-
-background:white;
-
-padding:24px;
-
-border-radius:16px;
-
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-
-margin-top:30px;
-
+.quick-actions {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  margin-top: 35px;
+  
+  /* Fix the height mismatch */
+  min-height: 380px; 
+  display: flex;
+  flex-direction: column;
 }
 
-.quick-actions h2{
-
-margin-bottom:20px;
-
-color:#1f2937;
-
+.quick-actions h2 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-.quick-grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-
-gap:18px;
-
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  flex: 1; /* Ensures grid stretches to fill height */
+  align-content: start; /* Keeps items at the top */
 }
 
-.quick-card{
-
-border:none;
-
-background:#f8fafc;
-
-padding:22px;
-
-border-radius:14px;
-
-cursor:pointer;
-
-transition:.25s;
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-gap:12px;
-
-font-size:16px;
-
-font-weight:600;
-
+.quick-card {
+  border: 1px solid #f1f5f9;
+  background: #f8fafc;
+  padding: 24px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #334155;
 }
 
-.quick-card:hover{
-
-transform:translateY(-6px);
-
-background:#2563eb;
-
-color:white;
-
+/* Aesthetic hover effect */
+.quick-card:hover {
+  transform: translateY(-4px);
+  background: #eff6ff; /* Soft blue tint */
+  border-color: #bfdbfe; /* Subtle blue border */
+  color: #1e40af;
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.1);
 }
 
-.quick-icon{
+.quick-icon {
+  font-size: 28px;
+  color: #64748b;
+  transition: 0.3s;
+}
 
-font-size:30px;
-
+.quick-card:hover .quick-icon {
+  color: #2563eb; /* Icons change color on hover */
+  transform: scale(1.1);
 }

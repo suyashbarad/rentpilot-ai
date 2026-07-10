@@ -1,0 +1,85 @@
+.ai-card {
+  background: #ffffff;
+  border-radius: 20px; /* Slightly more rounded for a modern feel */
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); /* Softer shadow */
+  display: flex;
+  flex-direction: column;
+  min-height: 380px;
+  border: 1px solid #f1f5f9; /* Subtle border for definition */
+}
+
+.ai-card h2 {
+  margin: 0 0 20px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: 0.05em; /* Adds a premium feel */
+}
+
+.ai-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px; /* Space for scrollbar */
+}
+
+.ai-item {
+  background: #f8fafc;
+  border-left: 4px solid #2563eb;
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.ai-item:hover {
+  transform: translateY(-2px);
+  background: #f1f5f9; /* Subtle background shift on hover */
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+}
+
+.ai-type {
+  font-size: 11px;
+  font-weight: 800;
+  color: #2563eb;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ai-message {
+  font-size: 15px;
+  color: #374151;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.ai-recommendation {
+  font-size: 13px;
+  font-weight: 600;
+  color: #059669;
+  display: flex;
+  align-items: center;
+}
+
+.empty-ai {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 15px;
+  color: #94a3b8;
+  background: #fcfcfd;
+  border: 2px dashed #e2e8f0;
+  border-radius: 16px;
+  padding: 40px;
+}
+
+@media (max-width: 768px) {
+  .ai-card {
+    min-height: auto;
+  }
+}
