@@ -1,24 +1,23 @@
-.chart-card{
+.revenue-chart{
 
-background:white;
+background:#fff;
 
-padding:20px;
+padding:25px;
 
-border-radius:15px;
+border-radius:16px;
 
-box-shadow:0 8px 18px rgba(0,0,0,.08);
-letter-spacing: 0.05em; /* Adds a premium feel */
+box-shadow:0 10px 25px rgba(0,0,0,.08);
 
-}
-
-.chart-card h2{
-
-margin-bottom:15px;
+margin-top:25px;
 
 }
 
-.chart-container{
+.revenue-chart h2{
 
-height:320px;
+margin-bottom:20px;
+
+font-size:22px;
+
+font-weight:700;
 
 }

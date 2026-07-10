@@ -1,80 +1,47 @@
 import {
-
-ResponsiveContainer,
-AreaChart,
-Area,
-CartesianGrid,
-Tooltip,
-XAxis,
-YAxis
-
+  BarChart,
+  Bar,
+  XAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid
 } from "recharts";
 
 import "./RevenueChart.css";
 
-export default function RevenueChart({ analytics }) {
+export default function RevenueChart({ data }) {
 
-const data=[
+  return (
 
-{
-month:"Collected",
-amount:Number(analytics.totalRentCollected)||0
-},
+    <div className="revenue-chart">
 
-{
-month:"Pending",
-amount:Number(analytics.pendingRent)||0
-}
+      <h2>Monthly Revenue</h2>
 
-];
+      <ResponsiveContainer
+        width="100%"
+        height={300}
+      >
 
-return(
+        <BarChart data={data}>
 
-<div className="chart-card">
+          <CartesianGrid strokeDasharray="3 3" />
 
-<h2>
+          <XAxis dataKey="month" />
 
-Revenue Overview
+          <Tooltip />
 
-</h2>
+          <Bar
+            dataKey="revenue"
+            fill="#2563eb"
+            radius={[8,8,0,0]}
+          />
 
-<div className="chart-container">
+        </BarChart>
 
-<ResponsiveContainer
-width="100%"
-height={320}
->
+      </ResponsiveContainer>
 
-<AreaChart data={data}>
+    </div>
 
-<CartesianGrid strokeDasharray="3 3"/>
-
-<XAxis dataKey="month"/>
-
-<YAxis/>
-
-<Tooltip/>
-
-<Area
-
-type="monotone"
-
-dataKey="amount"
-
-stroke="#2563eb"
-
-fill="#93c5fd"
-
-/>
-
-</AreaChart>
-
-</ResponsiveContainer>
-
-</div>
-
-</div>
-
-);
+  );
 
 }

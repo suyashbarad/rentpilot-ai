@@ -1,3 +1,5 @@
+console.log("✅ DASHBOARD ROUTES FILE LOADED");
+
 const express = require("express");
 const router = express.Router();
 
@@ -43,5 +45,13 @@ router.get(
   authMiddleware,
   dashboardController.getRecentActivity
 );
+router.get("/monthly-revenue", (req, res) => {
+  console.log("✅ Monthly Revenue Endpoint Hit");
+
+  res.json({
+    success: true,
+    message: "Working"
+  });
+});
 
 module.exports = router;

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import Layout from "../components/layout/Layout";
 
+import RevenueChart from "../components/dashboard/RevenueChart";
 import StatCard from "../components/dashboard/StatCards";
 import RevenueCard from "../components/dashboard/RevenueCard";
 import OccupancyCard from "../components/dashboard/OccupancyCard";
@@ -23,6 +24,7 @@ export default function Dashboard() {
     complaints: []
   });
   const [insights, setInsights] = useState([]);
+  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
 
   useEffect(() => {
     loadDashboard();
@@ -36,13 +38,15 @@ export default function Dashboard() {
         statsRes,
         analyticsRes,
         recentRes,
-        insightsRes
+        insightsRes,
+        monthlyRevenueRes
       ] = await Promise.all([
 
         dashboardService.getDashboard(),
         dashboardService.getAnalytics(),
         dashboardService.getRecent(),
-        dashboardService.getInsights()
+        dashboardService.getInsights(),
+        // dashboardService.getMonthlyRevenue(),
 
       ]);
 
@@ -81,6 +85,7 @@ export default function Dashboard() {
           <RevenueCard analytics={analytics} />
 
           <OccupancyCard stats={stats} />
+          
 
         </div>
 
@@ -88,7 +93,8 @@ export default function Dashboard() {
 
           <AIInsightsCard insights={insights} />
 
-          <QuickActions />
+          <QuickActions /> 
+          {/* <RevenueChart data={monthlyRevenue} /> */}
 
         </div>
 

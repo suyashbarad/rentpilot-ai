@@ -20,9 +20,15 @@ const getInsights = async () => {
   return response.data;
 };
 
+const getMonthlyRevenue = async () => {
+  const response = await api.get("/dashboard/monthly-revenue");
+  return response.data;
+};
+
 export default {
   getDashboard,
   getAnalytics,
   getRecent,
-  getInsights
+  getInsights,
+  getMonthlyRevenue,
 };

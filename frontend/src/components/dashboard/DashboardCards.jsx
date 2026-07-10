@@ -56,12 +56,7 @@ export default function DashboardCards({ data }) {
       icon: <FaExclamationCircle />,
       color: "#f59e0b",
     },
-    {
-      title: "Today's Visitors",
-      value: data.visitorsToday,
-      icon: <FaUserFriends />,
-      color: "#14b8a6",
-    },
+    
   ];
 
   return (

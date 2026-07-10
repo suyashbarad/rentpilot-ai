@@ -187,3 +187,31 @@ exports.getRecentActivity = (req, res) => {
   });
 
 };
+// exports.getMonthlyRevenue = (req, res) => {
+
+//   const sql = `
+//     SELECT
+//       month,
+//       SUM(amount) AS revenue
+//     FROM rent_payments
+//     WHERE payment_status='Paid'
+//     GROUP BY month
+//     ORDER BY FIELD(
+//       month,
+//       'January','February','March','April','May','June',
+//       'July','August','September','October','November','December'
+//     )
+//   `;
+
+//   pool.query(sql,(err,result)=>{
+
+//     if(err){
+//       return res.status(500).json(err);
+//     }
+
+//     res.json(result);
+
+//   });
+
+
+// };
