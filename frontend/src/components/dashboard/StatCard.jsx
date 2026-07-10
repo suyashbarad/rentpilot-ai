@@ -1,109 +1,117 @@
-// import {
-//   FaBuilding,
-//   FaDoorOpen,
-//   FaUsers,
-//   FaMoneyBillWave,
-//   FaClipboardList,
-//   FaCheckCircle,
-//   FaWalking
-// } from "react-icons/fa";
+import {
+  FaBuilding,
+  FaDoorOpen,
+  FaUsers,
+  FaMoneyBillWave,
+  FaExclamationCircle,
+  FaHome,
+  FaWalking
+} from "react-icons/fa";
 
-// import "./StatCards.css";
+import "./StatCard.css";
 
-// export default function StatCards({ stats }) {
+export default function StatCard({ data }) {
 
-//   const cards = [
+  const cards = [
 
-//     {
-//       title: "Buildings",
-//       value: stats.totalBuildings,
-//       icon: <FaBuilding />,
-//       color: "#2563eb"
-//     },
+    {
+      title: "Buildings",
+      value: data.totalBuildings || 0,
+      icon: <FaBuilding />,
+      color: "#2563eb"
+    },
 
-//     {
-//       title: "Total Flats",
-//       value: stats.totalFlats,
-//       icon: <FaDoorOpen />,
-//       color: "#7c3aed"
-//     },
+    {
+      title: "Total Flats",
+      value: data.totalFlats || 0,
+      icon: <FaHome />,
+      color: "#7c3aed"
+    },
 
-//     {
-//       title: "Occupied Flats",
-//       value: stats.occupiedFlats,
-//       icon: <FaCheckCircle />,
-//       color: "#16a34a"
-//     },
+    {
+      title: "Occupied",
+      value: data.occupiedFlats || 0,
+      icon: <FaDoorOpen />,
+      color: "#16a34a"
+    },
 
-//     {
-//       title: "Vacant Flats",
-//       value: stats.vacantFlats,
-//       icon: <FaDoorOpen />,
-//       color: "#f97316"
-//     },
+    {
+      title: "Vacant",
+      value: data.vacantFlats || 0,
+      icon: <FaDoorOpen />,
+      color: "#f97316"
+    },
 
-//     {
-//       title: "Tenants",
-//       value: stats.totalTenants,
-//       icon: <FaUsers />,
-//       color: "#0ea5e9"
-//     },
+    {
+      title: "Tenants",
+      value: data.totalTenants || 0,
+      icon: <FaUsers />,
+      color: "#0ea5e9"
+    },
 
-//     {
-//       title: "Pending Payments",
-//       value: stats.pendingPayments,
-//       icon: <FaMoneyBillWave />,
-//       color: "#dc2626"
-//     },
+    {
+      title: "Pending Rent",
+      value: data.pendingPayments || 0,
+      icon: <FaMoneyBillWave />,
+      color: "#dc2626"
+    },
 
-//     {
-//       title: "Open Complaints",
-//       value: stats.openComplaints,
-//       icon: <FaClipboardList />,
-//       color: "#f59e0b"
-//     },
+    {
+      title: "Complaints",
+      value: data.openComplaints || 0,
+      icon: <FaExclamationCircle />,
+      color: "#f59e0b"
+    },
 
-//     {
-//       title: "Today's Visitors",
-//       value: stats.visitorsToday,
-//       icon: <FaWalking />,
-//       color: "#10b981"
-//     }
+    {
+      title: "Visitors Today",
+      value: data.visitorsToday || 0,
+      icon: <FaWalking />,
+      color: "#10b981"
+    }
 
-//   ];
+  ];
 
-//   return (
+  return (
 
-//     <div className="stats-grid">
+    <div className="stats-grid">
 
-//       {cards.map((card, index) => (
+      {
 
-//         <div
-//           key={index}
-//           className="stat-card"
-//         >
+        cards.map((card,index)=>(
 
-//           <div
-//             className="icon-box"
-//             style={{ background: card.color }}
-//           >
-//             {card.icon}
-//           </div>
+          <div
+            className="stat-card"
+            key={index}
+          >
 
-//           <div>
+            <div
+              className="stat-icon"
+              style={{
+                background:card.color
+              }}
+            >
 
-//             <h2>{card.value ?? 0}</h2>
+              {card.icon}
 
-//             <p>{card.title}</p>
+            </div>
 
-//           </div>
+            <div>
 
-//         </div>
+              <h2>{card.value}</h2>
 
-//       ))}
+              <p>{card.title}</p>
 
-//     </div>
+            </div>
 
-//   );
+          </div>
 
-// }
+        ))
+
+      }
+
+    </div>
+
+  );
+
+}

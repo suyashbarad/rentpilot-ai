@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 
 import Layout from "../components/layout/Layout";
 
-import RevenueChart from "../components/dashboard/RevenueChart";
-import StatCard from "../components/dashboard/StatCards";
-import RevenueCard from "../components/dashboard/RevenueCard";
+import DashboardHeader from "../components/dashboard/DashboardHeader";
+import WelcomeCard from "../components/dashboard/WelcomeCard";
+// import DashboardCards from "../components/dashboard/DashboardCards";
+import StatCard from "../components/dashboard/StatCard";
 import OccupancyCard from "../components/dashboard/OccupancyCard";
 import AIInsightsCard from "../components/dashboard/AIInsightsCard";
 import QuickActions from "../components/dashboard/QuickActions";
 import RecentPayments from "../components/dashboard/RecentPayments";
 import RecentComplaints from "../components/dashboard/RecentComplaints";
+import SkeletonCard from "../components/dashboard/SkeletonCard";
 
 import dashboardService from "../services/dashboard";
 
@@ -17,14 +19,18 @@ import "./Dashboard.css";
 
 export default function Dashboard() {
 
+  const [loading, setLoading] = useState(true);
+
   const [stats, setStats] = useState({});
+
   const [analytics, setAnalytics] = useState({});
+
   const [recent, setRecent] = useState({
     payments: [],
     complaints: []
   });
+
   const [insights, setInsights] = useState([]);
-  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
 
   useEffect(() => {
     loadDashboard();
@@ -35,31 +41,31 @@ export default function Dashboard() {
     try {
 
       const [
-        statsRes,
-        analyticsRes,
-        recentRes,
-        insightsRes,
-        monthlyRevenueRes
+        statsData,
+        analyticsData,
+        recentData
       ] = await Promise.all([
-
         dashboardService.getDashboard(),
         dashboardService.getAnalytics(),
-        dashboardService.getRecent(),
-        dashboardService.getInsights(),
-        // dashboardService.getMonthlyRevenue(),
-
+        dashboardService.getRecent()
       ]);
 
-      setStats(statsRes);
-      setAnalytics(analyticsRes);
-      setRecent(recentRes);
-      setInsights(insightsRes);
+      setStats(statsData);
+      setAnalytics(analyticsData);
+      setRecent(recentData);
+
+      try {
+        const ai = await dashboardService.getInsights();
+        setInsights(ai.insights || []);
+      } catch {
+        setInsights([]);
+      }
 
     } catch (err) {
-
       console.log(err);
-
     }
+
+    setLoading(false);
 
   };
 
@@ -67,50 +73,51 @@ export default function Dashboard() {
 
     <Layout>
 
-      <div className="dashboard-page">
+      <DashboardHeader />
 
-        <h1 className="dashboard-title">
+      <WelcomeCard />
 
-          RentPilot AI Dashboard
+      {
 
-        </h1>
+        loading ?
 
-        <StatCard
-          stats={stats}
-          analytics={analytics}
-        />
+        <SkeletonCard />
 
-        <div className="dashboard-grid">
+        :
 
-          <RevenueCard analytics={analytics} />
+        <>
 
-          <OccupancyCard stats={stats} />
-          
+          <StatCard data={stats} />
 
-        </div>
+          <div className="dashboard-row">
 
-        <div className="dashboard-grid">
+            <OccupancyCard
+              analytics={analytics}
+            />
 
-          <AIInsightsCard insights={insights} />
+            <AIInsightsCard
+              insights={insights}
+            />
 
-          <QuickActions /> 
-          {/* <RevenueChart data={monthlyRevenue} /> */}
+          </div>
 
-        </div>
+          <QuickActions />
 
-        <div className="dashboard-grid">
+          <div className="dashboard-row">
 
-          <RecentPayments
-            payments={recent.payments}
-          />
+            <RecentPayments
+              payments={recent.payments}
+            />
 
-          <RecentComplaints
-            complaints={recent.complaints}
-          />
+            <RecentComplaints
+              complaints={recent.complaints}
+            />
 
-        </div>
+          </div>
 
-      </div>
+        </>
+
+      }
 
     </Layout>
 

@@ -1,31 +1,57 @@
 import "./DashboardHeader.css";
 
-export default function DashboardHeader(){
+export default function DashboardHeader() {
 
-return(
+  const hour = new Date().getHours();
 
-<div className="dashboard-header">
+  let greeting = "Good Evening";
 
-<div>
+  if (hour < 12)
+    greeting = "Good Morning";
 
-<h1>Dashboard</h1>
+  else if (hour < 18)
+    greeting = "Good Afternoon";
 
-<p>
-Welcome to RentPilot AI
-</p>
+  const today = new Date().toLocaleDateString(
+    "en-IN",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }
+  );
 
-</div>
+  return (
 
-<div>
+    <div className="dashboard-header">
 
-<h2>
-🏢 Smart Apartment Management
-</h2>
+      <div>
 
-</div>
+        <h1>{greeting}, Admin 👋</h1>
 
-</div>
+        <p>{today}</p>
 
-);
+      </div>
+
+      <div className="profile-box">
+
+        <span className="notification">
+
+          🔔
+
+        </span>
+
+        <div className="avatar">
+
+          A
+
+        </div>
+
+      </div>
+
+    </div>
+
+  );
 
 }
