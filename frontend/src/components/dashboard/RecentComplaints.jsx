@@ -1,51 +1,121 @@
 import "./RecentComplaints.css";
 
-export default function RecentComplaints({ complaints }) {
+export default function RecentComplaints({
 
-  return (
+complaints=[]
 
-    <div className="recent-card">
+}){
 
-      <h2>Recent Complaints</h2>
+return(
 
-      <table>
+<div className="recent-card">
 
-        <thead>
+<h2>
 
-          <tr>
+Recent Complaints
 
-            <th>Tenant</th>
+</h2>
 
-            <th>Title</th>
+<table>
 
-            <th>Status</th>
+<thead>
 
-          </tr>
+<tr>
 
-        </thead>
+<th>
 
-        <tbody>
+Tenant
 
-          {(complaints || []).map((complaint,index)=>(
+</th>
 
-            <tr key={index}>
+<th>
 
-              <td>{complaint.name}</td>
+Complaint
 
-              <td>{complaint.title}</td>
+</th>
 
-              <td>{complaint.status}</td>
+<th>
 
-            </tr>
+Status
 
-          ))}
+</th>
 
-        </tbody>
+</tr>
 
-      </table>
+</thead>
 
-    </div>
+<tbody>
 
-  );
+{
+
+complaints.length===0?
+
+(
+
+<tr>
+
+<td colSpan="3">
+
+No complaints
+
+</td>
+
+</tr>
+
+)
+
+:
+
+(
+
+complaints.map((item,index)=>(
+
+<tr key={index}>
+
+<td>
+
+{item.name}
+
+</td>
+
+<td>
+
+{item.title}
+
+</td>
+
+<td>
+
+<span
+className={
+item.status==="Resolved"
+?
+"badge paid"
+:
+"badge pending"
+}
+>
+
+{item.status}
+
+</span>
+
+</td>
+
+</tr>
+
+))
+
+)
+
+}
+
+</tbody>
+
+</table>
+
+</div>
+
+);
 
 }

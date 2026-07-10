@@ -1,12 +1,14 @@
 .recent-card{
 
-background:rgb(112, 98, 98);
+background:white;
 
 padding:25px;
 
-border-radius:16px;
+border-radius:18px;
 
-box-shadow:0 10px 25px rgba(0,0,0,.08);
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+margin-top:25px;
 
 }
 
@@ -23,10 +25,38 @@ margin-top:20px;
 .recent-card th,
 .recent-card td{
 
-padding:12px;
+padding:14px;
+
+text-align:left;
 
 border-bottom:1px solid #eee;
 
-text-align:left;
+}
+
+.badge{
+
+padding:6px 14px;
+
+border-radius:20px;
+
+font-size:13px;
+
+font-weight:600;
+
+}
+
+.paid{
+
+background:#dcfce7;
+
+color:#166534;
+
+}
+
+.pending{
+
+background:#fee2e2;
+
+color:#991b1b;
 
 }

@@ -93,7 +93,9 @@ exports.getInsights = (req, res) => {
 
         }
 
-        res.json(insights);
+        res.json({
+        insights
+});
 
     })
 

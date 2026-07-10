@@ -1,6 +1,6 @@
 import "./RecentPayments.css";
 
-export default function RecentPayments({ payments }) {
+export default function RecentPayments({ payments = [] }) {
 
   return (
 
@@ -26,19 +26,61 @@ export default function RecentPayments({ payments }) {
 
         <tbody>
 
-          {(payments || []).map((payment,index)=>(
+          {
 
-            <tr key={index}>
+            payments.length === 0 ?
 
-              <td>{payment.name}</td>
+            (
 
-              <td>₹ {payment.amount}</td>
+              <tr>
 
-              <td>{payment.payment_status}</td>
+                <td colSpan="3">
 
-            </tr>
+                  No recent payments
 
-          ))}
+                </td>
+
+              </tr>
+
+            )
+
+            :
+
+            (
+
+              payments.map((item,index)=>(
+
+                <tr key={index}>
+
+                  <td>{item.name}</td>
+
+                  <td>₹{item.amount}</td>
+
+                  <td>
+
+                    <span
+                      className={
+                        item.payment_status==="Paid"
+                        ?
+                        "badge paid"
+                        :
+                        "badge pending"
+                      }
+                    >
+
+                      {item.payment_status}
+
+                    </span>
+
+                  </td>
+
+                </tr>
+
+              ))
+
+            )
+
+          }
 
         </tbody>
 
