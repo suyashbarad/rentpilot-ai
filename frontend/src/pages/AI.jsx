@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 
 import Layout from "../components/layout/Layout";
-
 import aiService from "../services/aiService";
-
 import InsightCard from "../components/ai/InsightCard";
 
 import "./AI.css";
@@ -20,9 +18,7 @@ export default function AI() {
 
       console.log(res.data);
 
-      setInsights(res.data);
-
-      setInsights(res.data);
+      setInsights(res.data.insights || []);
 
     } catch (err) {
 
@@ -46,14 +42,22 @@ export default function AI() {
 
         <h2>🤖 RentPilot AI Insights</h2>
 
-        {insights.map((item, index) => (
+        {insights.length === 0 ? (
 
-          <InsightCard
-            key={index}
-            insight={item}
-          />
+          <p>No AI insights available.</p>
 
-        ))}
+        ) : (
+
+          insights.map((item, index) => (
+
+            <InsightCard
+              key={index}
+              insight={item}
+            />
+
+          ))
+
+        )}
 
       </div>
 

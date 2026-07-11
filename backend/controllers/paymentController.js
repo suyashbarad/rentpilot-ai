@@ -13,7 +13,7 @@ exports.createPayment = (req, res) => {
   } = req.body;
 
   if (
-    !tenant_id ||
+    !users.id ||
     !month ||
     !year ||
     amount == null
@@ -26,7 +26,7 @@ exports.createPayment = (req, res) => {
   const sql = `
     INSERT INTO rent_payments
     (
-      tenant_id,
+      users.id,
       month,
       year,
       amount,
@@ -41,7 +41,7 @@ exports.createPayment = (req, res) => {
   pool.query(
     sql,
     [
-      tenant_id,
+      users.id,
       month,
       year,
       amount,
@@ -62,16 +62,17 @@ exports.createPayment = (req, res) => {
 exports.getAllPayments = (req, res) => {
   const sql = `
     SELECT
-      rent_payments.*,
-      users.name,
-      flats.flat_number
+        rent_payments.*,
+        users.name,
+        flats.flat_number
     FROM rent_payments
-    JOIN tenants ON rent_payments.tenant_id = tenants.id
-    JOIN users ON tenants.user_id = users.id
-    JOIN flats ON tenants.flat_id = flats.id
+    LEFT JOIN users
+        ON rent_payments.tenant_id = users.id
+    LEFT JOIN flats
+        ON users.flat_id = flats.id
+    WHERE users.role='Tenant'
     ORDER BY rent_payments.id DESC
-  `;
-
+    `;
   pool.query(sql, (err, results) => {
     if (err) return res.status(500).json(err);
     res.json(results);
@@ -112,14 +113,14 @@ exports.updatePayment = (req, res) => {
 
   const sql = `
     UPDATE rent_payments
-    SET tenant_id=?, month=?, year=?, amount=?, payment_status=?, payment_date=?, payment_mode=?, transaction_id=?
+    SET users.id=?, month=?, year=?, amount=?, payment_status=?, payment_date=?, payment_mode=?, transaction_id=?
     WHERE id=?
   `;
 
   pool.query(
     sql,
     [
-      tenant_id,
+      users.id,
       month,
       year,
       amount,

@@ -8,7 +8,10 @@ import "./AddTenantForm.css";
 export default function AddTenantForm({ refresh }) {
 
   const [form, setForm] = useState({
-    user_id: "",
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
     flat_id: "",
     aadhaar: "",
     occupation: "",
@@ -26,15 +29,19 @@ export default function AddTenantForm({ refresh }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    console.log(form);
 
     try {
-
       await tenantService.create(form);
 
       toast.success("Tenant Added");
 
       setForm({
-        user_id: "",
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
         flat_id: "",
         aadhaar: "",
         occupation: "",
@@ -65,9 +72,31 @@ export default function AddTenantForm({ refresh }) {
     >
 
       <input
-        name="user_id"
-        placeholder="User ID"
-        value={form.user_id}
+        name="name"
+        placeholder="Tenant Name"
+        value={form.name}
+        onChange={handleChange}
+      />
+
+      <input
+        name="email"
+        placeholder="Email"
+        value={form.email}
+        onChange={handleChange}
+      />
+
+      <input
+        name="phone"
+        placeholder="Phone"
+        value={form.phone}
+        onChange={handleChange}
+      />
+
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={form.password}
         onChange={handleChange}
       />
 

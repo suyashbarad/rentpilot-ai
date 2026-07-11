@@ -33,7 +33,7 @@ export default function AddPaymentForm({ refresh }) {
 
     try {
 
-      await paymentService.createPayment(form);
+      await paymentService.create(form);
 
       toast.success("Payment Added");
 

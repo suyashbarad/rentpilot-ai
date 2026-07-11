@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+console.log("TENANT ROUTES LOADED");
 
 const tenantController = require("../controllers/tenantController");
 const authMiddleware = require("../middlewares/authMiddleware");

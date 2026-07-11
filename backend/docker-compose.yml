@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   mysql:
     image: mysql:8.0
@@ -21,6 +23,14 @@ services:
       retries: 10
       start_period: 20s
 
+  redis:
+    image: redis:7-alpine
+    container_name: rentpilot-redis
+    restart: always
+
+    ports:
+      - "6379:6379"
+
   backend:
     build: .
     container_name: rentpilot-backend
@@ -32,6 +42,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      redis:
+        condition: service_started
 
     environment:
       PORT: 5001
@@ -41,12 +53,7 @@ services:
       DB_PASSWORD: Mohini*#007
       DB_NAME: rentpilot_ai
       JWT_SECRET: RentPilotAI@2026
-  redis:
-    image: redis:7-alpine
-    container_name: rentpilot-redis
-    restart: always
+      REDIS_HOST: redis
 
-    ports:
-    - "6379:6379"
 volumes:
   mysql_data:

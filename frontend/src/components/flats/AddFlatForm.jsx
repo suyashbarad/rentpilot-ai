@@ -106,7 +106,7 @@ export default function AddFlatForm({ refresh }) {
       />
 
       <button>
-        Add Flat
+         Add Flat 
       </button>
 
     </form>

@@ -1,46 +1,67 @@
-.flat-table{
-    width:100%;
-    background:white;
-    border-collapse:collapse;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+.flat-table {
+  width: 100%;
+  background: white;
+  border-collapse: separate; /* Changed to separate for border-radius to work well */
+  border-spacing: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
 }
 
-.flat-table th{
-    background:#2563eb;
-    color:white;
-    padding:14px;
-    text-align:left;
+.flat-table th {
+  background: #f8fafc; /* Softer header background */
+  color: #1e293b;
+  padding: 16px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 700; /* Bold heading */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #e2e8f0;
 }
 
-.flat-table td{
-    padding:14px;
-    border-bottom:1px solid #eee;
+.flat-table td {
+  padding: 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #475569;
+  font-size: 14px;
 }
 
-.flat-table tr:hover{
-    background:#f8fafc;
+.flat-table tr:last-child td {
+  border-bottom: none;
 }
 
-.delete-btn{
-    background:#ef4444;
-    color:white;
-    border:none;
-    padding:8px 14px;
-    border-radius:6px;
-    cursor:pointer;
-}
-.edit-btn{
-background:#22c55e;
-color:white;
-border:none;
-padding:8px 14px;
-border-radius:6px;
-cursor:pointer;
-margin-right:10px;
+.flat-table tr:hover {
+  background: #fdfdfd;
 }
 
-.edit-btn:hover{
-background:#16a34a;
+/* Professional Buttons */
+.edit-btn, .delete-btn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  background: #f0fdf4;
+  color: #16a34a;
+  margin-right: 8px;
+}
+
+.edit-btn:hover {
+  background: #dcfce7;
+}
+
+.delete-btn {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #fee2e2;
 }

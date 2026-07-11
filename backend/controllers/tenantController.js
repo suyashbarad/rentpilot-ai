@@ -1,142 +1,260 @@
 const { pool } = require("../config/db");
+const bcrypt = require("bcrypt");
 
-exports.createTenant = (req, res) => {
-  const {
-    user_id,
-    flat_id,
-    aadhaar,
-    occupation,
-    family_members,
-    joining_date,
-    agreement_end
-  } = req.body;
+// ========================= CREATE =========================
 
-  if (
-    !user_id ||
-    !flat_id ||
-    !aadhaar ||
-    !occupation ||
-    family_members == null ||
-    !joining_date ||
-    !agreement_end
-  ) {
-    return res.status(400).json({
-      message: "All fields are required"
-    });
-  }
-
-  const sql = `
-    INSERT INTO tenants
-    (user_id, flat_id, aadhaar, occupation, family_members, joining_date, agreement_end)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `;
-
-  pool.query(
-    sql,
-    [
-      user_id,
-      flat_id,
-      aadhaar,
-      occupation,
-      family_members,
-      joining_date,
-      agreement_end
-    ],
-    (err) => {
-      if (err) {
-        return res.status(500).json(err);
-      }
-
-      res.status(201).json({
-        message: "Tenant created successfully"
-      });
-    }
-  );
-};
-exports.getAllTenants = (req, res) => {
-  const sql = `
-    SELECT tenants.*, users.name, flats.flat_number
-    FROM tenants
-    JOIN users ON tenants.user_id = users.id
-    JOIN flats ON tenants.flat_id = flats.id
-    ORDER BY tenants.id DESC
-  `;
-
-  pool.query(sql, (err, results) => {
-    if (err) return res.status(500).json(err);
-    res.json(results);
-  });
-};
-exports.getTenantById = (req, res) => {
-  const { id } = req.params;
-
-  pool.query(
-    "SELECT * FROM tenants WHERE id = ?",
-    [id],
-    (err, results) => {
-      if (err) return res.status(500).json(err);
-
-      if (results.length === 0) {
-        return res.status(404).json({
-          message: "Tenant not found"
-        });
-      }
-
-      res.json(results[0]);
-    }
-  );
-};
-exports.updateTenant = (req, res) => {
-  const { id } = req.params;
-
-  const {
-    user_id,
-    flat_id,
-    aadhaar,
-    occupation,
-    family_members,
-    joining_date,
-    agreement_end
-  } = req.body;
-
-  const sql = `
-    UPDATE tenants
-    SET user_id=?, flat_id=?, aadhaar=?, occupation=?, family_members=?, joining_date=?, agreement_end=?
-    WHERE id=?
-  `;
-
-  pool.query(
-    sql,
-    [
-      user_id,
+exports.createTenant = async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      phone,
+      password,
       flat_id,
       aadhaar,
       occupation,
       family_members,
       joining_date,
       agreement_end,
-      id
+    } = req.body;
+
+    // Check email exists
+    pool.query(
+      "SELECT id FROM users WHERE email=?",
+      [email],
+      async (err, rows) => {
+        if (err) {
+    console.error("MYSQL ERROR:", err);
+    return res.status(500).json({
+        success: false,
+        error: err.message,
+        code: err.code
+    });
+}
+
+        if (rows.length > 0) {
+          return res.status(400).json({
+            message: "Email already exists",
+          });
+        }
+
+        const hashed = await bcrypt.hash(password, 10);
+        console.log("INSERT VALUES:", [
+            name,
+            email,
+            hashed,
+            phone,
+            "Tenant",
+            flat_id,
+            aadhaar,
+            occupation,
+            family_members,
+            joining_date,
+            agreement_end
+        ]);
+        const sql = `
+        INSERT INTO users
+        (
+          name,
+          email,
+          password,
+          phone,
+          role,
+          flat_id,
+          aadhaar,
+          occupation,
+          family_members,
+          joining_date,
+          agreement_end
+        )
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)
+        `;
+
+        pool.query(
+          sql,
+          [
+            name,
+            email,
+            hashed,
+            phone,
+            "Tenant",
+            flat_id,
+            aadhaar,
+            occupation,
+            family_members,
+            joining_date,
+            agreement_end,
+          ],
+          (err) => {
+            if (err) {
+    console.error("MYSQL ERROR:", err);
+    return res.status(500).json({
+        success: false,
+        error: err.message,
+        code: err.code
+    });
+}
+
+            res.status(201).json({
+              success: true,
+              message: "Tenant Added Successfully",
+            });
+          }
+        );
+      }
+    );
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+// ========================= GET ALL =========================
+
+exports.getAllTenants = (req, res) => {
+  const sql = `
+    SELECT
+      users.*,
+      flats.flat_number
+    FROM users
+    LEFT JOIN flats
+      ON users.flat_id = flats.id
+    WHERE users.role='Tenant'
+    ORDER BY users.id DESC
+  `;
+
+  pool.query(sql, (err, result) => {
+    if (err) {
+    console.error("MYSQL ERROR:", err);
+    return res.status(500).json({
+        success: false,
+        error: err.message,
+        code: err.code
+    });
+}
+
+    res.json(result);
+  });
+};
+
+// ========================= GET ONE =========================
+
+exports.getTenantById = (req, res) => {
+  const { id } = req.params;
+
+  pool.query(
+    "SELECT * FROM users WHERE id=? AND role='Tenant'",
+    [id],
+    (err, result) => {
+      if (err) {
+    console.error("MYSQL ERROR:", err);
+    return res.status(500).json({
+        success: false,
+        error: err.message,
+        code: err.code
+    });
+}
+      if (result.length === 0) {
+        return res.status(404).json({
+          message: "Tenant not found",
+        });
+      }
+
+      res.json(result[0]);
+    }
+  );
+};
+
+// ========================= UPDATE =========================
+
+exports.updateTenant = (req, res) => {
+  const { id } = req.params;
+
+  const {
+    name,
+    email,
+    phone,
+    flat_id,
+    aadhaar,
+    occupation,
+    family_members,
+    joining_date,
+    agreement_end,
+  } = req.body;
+
+  const sql = `
+    UPDATE users
+    SET
+      name=?,
+      email=?,
+      phone=?,
+      flat_id=?,
+      aadhaar=?,
+      occupation=?,
+      family_members=?,
+      joining_date=?,
+      agreement_end=?
+    WHERE id=? AND role='Tenant'
+  `;
+
+  pool.query(
+    sql,
+    [
+      name,
+      email,
+      phone,
+      flat_id,
+      aadhaar,
+      occupation,
+      family_members,
+      joining_date,
+      agreement_end,
+      id,
     ],
     (err) => {
-      if (err) return res.status(500).json(err);
+      if (err) {
+    console.error("MYSQL ERROR:", err);
+    return res.status(500).json({
+        success: false,
+        error: err.message,
+        code: err.code
+    });
+}
 
       res.json({
-        message: "Tenant updated successfully"
+        success: true,
+        message: "Tenant updated successfully",
       });
     }
   );
 };
+
+// ========================= DELETE =========================
+
 exports.deleteTenant = (req, res) => {
   const { id } = req.params;
 
   pool.query(
-    "DELETE FROM tenants WHERE id = ?",
+    "DELETE FROM users WHERE id=? AND role='Tenant'",
     [id],
-    (err) => {
-      if (err) return res.status(500).json(err);
+    (err, result) => {
+      if (err) {
+        console.error("MYSQL ERROR:", err);
+        return res.status(500).json({
+            success: false,
+            error: err.message,
+            code: err.code
+      });
+}
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({
+          message: "Tenant not found",
+        });
+      }
 
       res.json({
-        message: "Tenant deleted successfully"
+        success: true,
+        message: "Tenant deleted successfully",
       });
     }
   );
