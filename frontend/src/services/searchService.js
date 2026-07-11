@@ -1,7 +1,7 @@
 import api from "./api";
 
-const search = (q) => api.get(`/search?q=${q}`);
+const search = (q) => api.get(`/Search?q=${q}`);
 
 export default {
-  search,
+  Search,
 };
