@@ -90,13 +90,25 @@ export default function StatCards({ stats }) {
             {card.icon}
           </div>
 
-          <div>
+          <div className="stat-info">
 
-            <h2>{card.value ?? 0}</h2>
+              <h2>{card.value ?? 0}</h2>
 
-            <p>{card.title}</p>
+              <p>{card.title}</p>
 
-          </div>
+              <div className="stat-footer">
+
+                  <span className="stat-status">
+                      ↑ Stable
+                  </span>
+
+                  <span className="stat-update">
+                      Updated now
+                  </span>
+
+    </div>
+
+</div>
 
         </div>
 

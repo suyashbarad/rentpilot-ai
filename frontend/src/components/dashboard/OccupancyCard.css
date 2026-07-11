@@ -1,20 +1,30 @@
 .occupancy-card{
 
-background:#fff;
+background:#ffffff;
 
-padding:25px;
+padding:28px;
 
-border-radius:16px;
+border-radius:22px;
 
-box-shadow:0 10px 25px rgba(0,0,0,.08);
+box-shadow:0 12px 30px rgba(15,23,42,.06);
+
+border:1px solid #eef2f7;
+
+display:flex;
+
+flex-direction:column;
 
 }
 
 .occupancy-card h2{
 
-margin-bottom:20px;
+margin:0 0 25px;
 
 font-size:22px;
+
+font-weight:700;
+
+color:#111827;
 
 }
 
@@ -22,13 +32,11 @@ font-size:22px;
 
 display:flex;
 
-justify-content:space-between;
-
 align-items:center;
 
-gap:30px;
+justify-content:space-between;
 
-flex-wrap:wrap;
+gap:40px;
 
 }
 
@@ -36,9 +44,15 @@ flex-wrap:wrap;
 
 position:relative;
 
-width:220px;
+width:320px;
 
-height:220px;
+height:320px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
 
 }
 
@@ -46,13 +60,13 @@ height:220px;
 
 position:absolute;
 
-top:50%;
+display:flex;
 
-left:50%;
+flex-direction:column;
 
-transform:translate(-50%,-50%);
+align-items:center;
 
-text-align:center;
+justify-content:center;
 
 }
 
@@ -60,19 +74,25 @@ text-align:center;
 
 margin:0;
 
-font-size:34px;
+font-size:44px;
+
+font-weight:800;
 
 color:#2563eb;
+
+line-height:1;
 
 }
 
 .chart-center p{
 
-margin:0;
+margin-top:8px;
 
-color:#666;
+font-size:15px;
 
-font-size:14px;
+color:#64748b;
+
+font-weight:600;
 
 }
 
@@ -84,7 +104,7 @@ display:flex;
 
 flex-direction:column;
 
-gap:18px;
+gap:20px;
 
 }
 
@@ -92,11 +112,43 @@ gap:18px;
 
 display:flex;
 
-justify-content:space-between;
-
 align-items:center;
 
-font-size:16px;
+justify-content:space-between;
+
+padding:18px 22px;
+
+border-radius:16px;
+
+background:#f8fafc;
+
+font-size:17px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.info-row:hover{
+
+transform:translateX(6px);
+
+box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}
+
+.info-row strong{
+
+font-size:22px;
+
+color:#111827;
+
+}
+
+.total{
+
+background:#eff6ff;
 
 }
 
@@ -110,9 +162,7 @@ border-radius:50%;
 
 background:#10b981;
 
-margin-right:10px;
-
-display:inline-block;
+margin-right:12px;
 
 }
 
@@ -126,29 +176,23 @@ border-radius:50%;
 
 background:#f97316;
 
-margin-right:10px;
-
-display:inline-block;
+margin-right:12px;
 
 }
 
-.total{
-
-margin-top:15px;
-
-padding-top:15px;
-
-border-top:1px solid #eee;
-
-font-weight:700;
-
-}
-
-@media(max-width:900px){
+@media(max-width:992px){
 
 .occupancy-content{
 
-justify-content:center;
+flex-direction:column;
+
+}
+
+.chart-box{
+
+width:280px;
+
+height:280px;
 
 }
 

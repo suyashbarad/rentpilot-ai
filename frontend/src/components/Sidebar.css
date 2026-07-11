@@ -1,0 +1,116 @@
+.sidebar{
+
+width:260px;
+min-height:100vh;
+
+background:linear-gradient(180deg,#0f172a,#1e293b);
+
+color:white;
+
+padding:30px 18px;
+
+display:flex;
+flex-direction:column;
+
+position:sticky;
+top:0;
+
+}
+
+.logo{
+
+display:flex;
+align-items:center;
+gap:15px;
+
+margin-bottom:45px;
+
+}
+
+.logo-circle{
+
+width:52px;
+height:52px;
+
+border-radius:14px;
+
+background:linear-gradient(135deg,#2563eb,#38bdf8);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:24px;
+
+}
+
+.logo h2{
+
+margin:0;
+font-size:22px;
+
+font-weight:700;
+
+}
+
+.logo span{
+
+font-size:13px;
+color:#94a3b8;
+
+}
+
+.sidebar nav{
+
+display:flex;
+flex-direction:column;
+
+gap:8px;
+
+}
+
+.sidebar a{
+
+display:flex;
+align-items:center;
+gap:14px;
+
+padding:14px 16px;
+
+border-radius:14px;
+
+text-decoration:none;
+
+color:#cbd5e1;
+
+font-weight:500;
+
+transition:.25s;
+
+}
+
+.sidebar a svg{
+
+font-size:18px;
+
+}
+
+.sidebar a:hover{
+
+background:#334155;
+
+color:white;
+
+transform:translateX(4px);
+
+}
+
+.sidebar a.active{
+
+background:linear-gradient(90deg,#2563eb,#3b82f6);
+
+color:white;
+
+box-shadow:0 8px 20px rgba(37,99,235,.35);
+
+}

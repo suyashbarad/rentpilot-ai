@@ -42,14 +42,14 @@ export default function OccupancyCard({ stats }) {
 
         <div className="chart-box">
 
-          <ResponsiveContainer width={220} height={220}>
+          <ResponsiveContainer width={300} height={300}>
 
             <PieChart>
 
               <Pie
                 data={data}
-                innerRadius={70}
-                outerRadius={95}
+                innerRadius={95}
+                outerRadius={130}
                 paddingAngle={3}
                 dataKey="value"
               >
