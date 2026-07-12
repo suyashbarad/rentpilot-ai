@@ -1,7 +1,10 @@
 import api from "./api";
 
-const search = (q) => api.get(`/Search?q=${q}`);
+const search = (q) => {
+  api.get(`/search?q=${encodeURIComponent(q)}`);
+  return response;
+};
 
 export default {
-  Search,
+  search,
 };

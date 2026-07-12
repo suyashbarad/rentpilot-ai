@@ -9,7 +9,7 @@ import Payments from "./pages/Payments";
 import Complaints from "./pages/Complaints";
 import Visitors from "./pages/Visitors";
 import Notifications from "./pages/Notifications";
-import Search from "./pages/Search";
+import SearchPage from "./pages/Search";
 import AI from "./pages/AI";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -95,7 +95,7 @@ function App() {
         path="/search"
         element={
           <ProtectedRoute>
-            <Search />
+            <SearchPage />
           </ProtectedRoute>
         }
       />
