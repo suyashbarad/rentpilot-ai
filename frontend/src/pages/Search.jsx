@@ -1,56 +1,36 @@
 import { useState } from "react";
 
 import Layout from "../components/layout/Layout";
-
 import SearchBar from "../components/search/SearchBar";
 import SearchResults from "../components/search/SearchResults";
-
 import searchService from "../services/searchService";
 
 import "./Search.css";
 
-export default function Search() {
+export default function SearchPage() {
+  const [results, setResults] = useState(null);
 
-  const [results,setResults]=useState(null);
+  const handleSearch = async (query) => {
+    if (!query?.trim()) return;
 
-  const handleSearch=async(q)=>{
-
-    if(!q) return;
-
-    try{
-
-      const res=await searchService.search(q);
-
-      setResults(res.data);
-
-    }catch(err){
-
-      console.log(err);
-
+    try {
+      const response = await searchService.search(query.trim());
+      setResults(response.data);
+    } catch (error) {
+      console.error("Search failed:", error);
+      setResults(null);
     }
-
   };
 
-  return(
-
+  return (
     <Layout>
-
       <div className="search-container">
-
         <h2>Global Search</h2>
 
-        <SearchBar
-          onSearch={handleSearch}
-        />
+        <SearchBar onSearch={handleSearch} />
 
-        <SearchResults
-          results={results}
-        />
-
+        <SearchResults results={results} />
       </div>
-
     </Layout>
-
   );
-
 }
