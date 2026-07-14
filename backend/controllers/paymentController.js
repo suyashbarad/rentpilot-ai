@@ -46,7 +46,14 @@ exports.createPayment = (req, res) => {
       transaction_id
     ],
     (err) => {
-      if (err) return res.status(500).json(err);
+      if (err) {
+  console.error("PAYMENT CREATE ERROR:", err);
+  return res.status(500).json({
+    success: false,
+    error: err.message,
+    code: err.code,
+  });
+}
 
       res.status(201).json({
         message: "Payment added successfully"
@@ -89,7 +96,14 @@ exports.updatePayment = (req, res) => {
       id
     ],
     (err) => {
-      if (err) return res.status(500).json(err);
+      if (err) {
+  console.error("PAYMENT CREATE ERROR:", err);
+  return res.status(500).json({
+    success: false,
+    error: err.message,
+    code: err.code,
+  });
+}
 
       res.json({
         message: "Payment updated successfully"
