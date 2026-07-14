@@ -12,12 +12,7 @@ exports.createPayment = (req, res) => {
     transaction_id
   } = req.body;
 
-  if (
-    !users.id ||
-    !month ||
-    !year ||
-    amount == null
-  ) {
+  if (!tenant_id || !month || !year || amount == null) {
     return res.status(400).json({
       message: "Required fields are missing"
     });
@@ -26,7 +21,7 @@ exports.createPayment = (req, res) => {
   const sql = `
     INSERT INTO rent_payments
     (
-      users.id,
+      tenant_id,
       month,
       year,
       amount,
@@ -41,7 +36,7 @@ exports.createPayment = (req, res) => {
   pool.query(
     sql,
     [
-      users.id,
+      tenant_id,
       month,
       year,
       amount,
@@ -59,44 +54,7 @@ exports.createPayment = (req, res) => {
     }
   );
 };
-exports.getAllPayments = (req, res) => {
-  const sql = `
-    SELECT
-        rent_payments.*,
-        users.name,
-        flats.flat_number
-    FROM rent_payments
-    LEFT JOIN users
-        ON rent_payments.tenant_id = users.id
-    LEFT JOIN flats
-        ON users.flat_id = flats.id
-    WHERE users.role='Tenant'
-    ORDER BY rent_payments.id DESC
-    `;
-  pool.query(sql, (err, results) => {
-    if (err) return res.status(500).json(err);
-    res.json(results);
-  });
-};
-exports.getPaymentById = (req, res) => {
-  const { id } = req.params;
 
-  pool.query(
-    "SELECT * FROM rent_payments WHERE id = ?",
-    [id],
-    (err, results) => {
-      if (err) return res.status(500).json(err);
-
-      if (results.length === 0) {
-        return res.status(404).json({
-          message: "Payment not found"
-        });
-      }
-
-      res.json(results[0]);
-    }
-  );
-};
 exports.updatePayment = (req, res) => {
   const { id } = req.params;
 
@@ -113,14 +71,14 @@ exports.updatePayment = (req, res) => {
 
   const sql = `
     UPDATE rent_payments
-    SET users.id=?, month=?, year=?, amount=?, payment_status=?, payment_date=?, payment_mode=?, transaction_id=?
+    SET tenant_id=?, month=?, year=?, amount=?, payment_status=?, payment_date=?, payment_mode=?, transaction_id=?
     WHERE id=?
   `;
 
   pool.query(
     sql,
     [
-      users.id,
+      tenant_id,
       month,
       year,
       amount,
@@ -135,21 +93,6 @@ exports.updatePayment = (req, res) => {
 
       res.json({
         message: "Payment updated successfully"
-      });
-    }
-  );
-};
-exports.deletePayment = (req, res) => {
-  const { id } = req.params;
-
-  pool.query(
-    "DELETE FROM rent_payments WHERE id = ?",
-    [id],
-    (err) => {
-      if (err) return res.status(500).json(err);
-
-      res.json({
-        message: "Payment deleted successfully"
       });
     }
   );
