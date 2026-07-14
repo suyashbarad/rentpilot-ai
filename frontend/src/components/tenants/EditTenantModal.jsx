@@ -10,9 +10,10 @@ export default function EditTenantModal({
   refresh,
   onClose,
 }) {
-
   const [form, setForm] = useState({
-    user_id: "",
+    name: "",
+    email: "",
+    phone: "",
     flat_id: "",
     aadhaar: "",
     occupation: "",
@@ -22,9 +23,10 @@ export default function EditTenantModal({
   });
 
   useEffect(() => {
-
     setForm({
-      user_id: tenant.user_id || "",
+      name: tenant.name || "",
+      email: tenant.email || "",
+      phone: tenant.phone || "",
       flat_id: tenant.flat_id || "",
       aadhaar: tenant.aadhaar || "",
       occupation: tenant.occupation || "",
@@ -36,61 +38,57 @@ export default function EditTenantModal({
         ? tenant.agreement_end.substring(0, 10)
         : "",
     });
-
   }, [tenant]);
 
   const handleChange = (e) => {
-
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
-
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     try {
-
-      await tenantService.update(
-        tenant.id,
-        form
-      );
+      await tenantService.update(tenant.id, form);
 
       toast.success("Tenant Updated");
-
       refresh();
-
       onClose();
-
     } catch {
-
       toast.error("Update Failed");
-
     }
-
   };
 
   return (
-
     <div className="modal-overlay">
-
       <div className="modal">
-
         <h2>Edit Tenant</h2>
 
         <form
           className="modal-form"
           onSubmit={handleSubmit}
         >
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Name"
+          />
 
           <input
-            name="user_id"
-            value={form.user_id}
+            name="email"
+            value={form.email}
             onChange={handleChange}
-            placeholder="User ID"
+            placeholder="Email"
+          />
+
+          <input
+            name="phone"
+            value={form.phone}
+            onChange={handleChange}
+            placeholder="Phone"
           />
 
           <input
@@ -136,7 +134,6 @@ export default function EditTenantModal({
           />
 
           <div className="modal-buttons">
-
             <button type="submit">
               Save
             </button>
@@ -147,15 +144,9 @@ export default function EditTenantModal({
             >
               Cancel
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
-
   );
-
 }
