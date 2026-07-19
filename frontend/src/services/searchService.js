@@ -1,8 +1,8 @@
 import api from "./api";
 
-const search = (q) => {
-  api.get(`/search?q=${encodeURIComponent(q)}`);
-  return response;
+const search = async (query) => {
+  const response = await api.get(`/search?q=${query}`);
+  return response.data;
 };
 
 export default {

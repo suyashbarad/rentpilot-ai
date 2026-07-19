@@ -9,19 +9,16 @@ export default function SearchBar({ onSearch }) {
   return (
 
     <div className="search-box">
-
       <input
         placeholder="Search buildings, tenants, flats..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && onSearch(query)}
       />
 
-      <button
-        onClick={() => onSearch(query)}
-      >
+      <button onClick={() => onSearch(query)}>
         Search
       </button>
-
     </div>
 
   );

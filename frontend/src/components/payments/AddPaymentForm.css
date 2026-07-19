@@ -1,29 +1,74 @@
-.payment-form{
-    display:grid;
-    grid-template-columns: repeat(4,1fr);
-    gap:15px;
-    margin-bottom:25px;
+.payment-form-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    padding: 24px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
-.payment-form input{
-    padding:10px;
-    border:1px solid #ddd;
-    border-radius:8px;
+.payment-form-container h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #334155;
+    font-weight: 600;
 }
 
-.payment-form button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
+.payment-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    align-items: end;
 }
 
-.payment-form button:hover{
-    background:#1d4ed8;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
-.payment-form select{
-    padding:10px;
-    border:1px solid #ddd;
-    border-radius:8px;
+
+.form-group label {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.payment-form input,
+.payment-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #334155;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.payment-form input:focus,
+.payment-form select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.payment-form button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    height: 42px;
+}
+
+.payment-form button:hover {
+    background-color: #2563eb;
+}
+
+.payment-form button:active {
+    transform: translateY(1px);
 }

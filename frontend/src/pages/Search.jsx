@@ -14,8 +14,8 @@ export default function SearchPage() {
     if (!query?.trim()) return;
 
     try {
-      const response = await searchService.search(query.trim());
-      setResults(response.data);
+      const data = await searchService.search(query.trim());
+    setResults(data);
     } catch (error) {
       console.error("Search failed:", error);
       setResults(null);

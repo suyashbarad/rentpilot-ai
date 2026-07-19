@@ -47,6 +47,12 @@ exports.login = (req, res) => {
 
   const sql = "SELECT * FROM admins WHERE email = ?";
 
+  console.log("Pool config:", {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  });
+
   pool.query(sql, [email], async (err, results) => {
   if (err) {
     console.error("Login database error:", err);

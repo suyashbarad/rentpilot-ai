@@ -36,6 +36,7 @@ const notificationRoutes = require("./routes/notificationRoutes");     //for not
 const dashboardRoutes = require("./routes/dashboardRoutes");        //final dashboard
 const searchRoutes=require("./routes/searchRoutes");                //to find earch result
 const aiRoutes = require("./routes/aiRoutes");                     //to use ai to find currect situation of system
+const communicationRoutes = require("./routes/communicationRoutes"); // AI calling and messaging
 
 
 const limiter = rateLimit({
@@ -60,8 +61,12 @@ const { pool } = require("./config/db");
 app.get("/ready", (req, res) => {
   pool.query("SELECT 1", (err) => {
     if (err) {
+      console.error("READY CHECK ERROR:", err);
+
       return res.status(503).json({
         status: "NOT READY",
+        error: err.message,
+        code: err.code,
       });
     }
 
@@ -95,6 +100,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/search",searchRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/communication", communicationRoutes);
 
 app.get("/", (req, res) => {
     res.send("🚀 RentPilot AI Backend is Running");

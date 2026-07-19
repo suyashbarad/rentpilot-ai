@@ -17,7 +17,9 @@ requiredEnv.forEach((env) => {
   }
 });
 
-require("./config/db");      // MySQL
+const { connectDB } = require("./config/db"); // MySQL
+connectDB();
+     
 require("./config/redis");   // Redis
 
 const PORT = process.env.PORT || 5001;

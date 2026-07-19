@@ -2,7 +2,16 @@ const { pool } = require("../config/db");
 
 exports.globalSearch = (req, res) => {
 
-    const keyword = `%${req.query.q}%`;
+    if (!req.query.q || req.query.q.trim() === "") {
+        return res.json({
+            buildings: [],
+            flats: [],
+            tenants: [],
+            visitors: []
+        });
+    }
+
+    const keyword = `%${req.query.q.trim()}%`;
 
     const queries = {
 
@@ -109,22 +118,16 @@ exports.globalSearch = (req, res) => {
     ])
 
     .then(results=>{
-
         res.json({
-
             buildings:results[0],
             flats:results[1],
             tenants:results[2],
             visitors:results[3]
-
         });
-
     })
-
     .catch(err=>{
-
-        res.status(500).json(err);
-
+        console.error("SEARCH ERROR:", err);
+        res.status(500).json({ success: false, error: err.message || "Search failed" });
     });
 
 };

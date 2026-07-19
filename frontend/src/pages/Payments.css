@@ -1,8 +1,25 @@
-.payments-container{
-    padding:30px;
+.payments-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.4s ease-out;
 }
 
-.payments-container h2{
-    margin-bottom:20px;
-    color:#1e293b;
+.payments-container h2 {
+    margin-bottom: 24px;
+    color: #1e293b;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
