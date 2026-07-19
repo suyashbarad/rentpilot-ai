@@ -21,6 +21,10 @@
 
 **GitHub Repository:** https://github.com/suyashbarad/rentpilot-ai
 
+**Demo Credentials:**<br>
+Email: suyash@rentpilot.ai<br>
+Password: 123456<br>
+
 ---
 
 # 📖 About the Project
