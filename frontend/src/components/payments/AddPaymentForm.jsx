@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import paymentService from "../../services/paymentService";
+import tenantService from "../../services/tenant";
 
 import "./AddPaymentForm.css";
 
 export default function AddPaymentForm({ refresh }) {
+
+  const [tenants, setTenants] = useState([]);
 
   const [form, setForm] = useState({
     tenant_id: "",
@@ -26,6 +29,12 @@ export default function AddPaymentForm({ refresh }) {
     });
 
   };
+
+  useEffect(() => {
+    tenantService.getAll()
+      .then((res) => setTenants(res.data))
+      .catch(() => toast.error("Could not load tenants"));
+  }, []);
 
   const handleSubmit = async (e) => {
 
@@ -63,14 +72,20 @@ export default function AddPaymentForm({ refresh }) {
       <form className="payment-form" onSubmit={handleSubmit}>
 
         <div className="form-group">
-          <label>Tenant ID</label>
-          <input
+          <label>Tenant</label>
+          <select
             name="tenant_id"
-            placeholder="e.g. 1"
             value={form.tenant_id}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="">Select a tenant</option>
+            {tenants.map((tenant) => (
+              <option key={tenant.id} value={tenant.id}>
+                {tenant.name} (ID: {tenant.id})
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">
