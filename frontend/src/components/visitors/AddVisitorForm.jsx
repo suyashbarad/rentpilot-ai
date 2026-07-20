@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import visitorService from "../../services/visitorService";
+import TenantSelect from "../tenants/TenantSelect";
 
 import "./AddVisitorForm.css";
 
@@ -59,9 +60,7 @@ export default function AddVisitorForm({ refresh }) {
       onSubmit={handleSubmit}
     >
 
-      <input
-        name="tenant_id"
-        placeholder="Tenant ID"
+      <TenantSelect
         value={form.tenant_id}
         onChange={handleChange}
       />

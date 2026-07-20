@@ -26,10 +26,12 @@ export default function TenantTable({ tenants, refresh }) {
 
   return (
     <>
+      <div className="tenant-table-wrap">
       <table className="tenant-table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>User ID</th>
+            <th>Tenant ID</th>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
@@ -41,6 +43,7 @@ export default function TenantTable({ tenants, refresh }) {
           {tenants.map((tenant) => (
             <tr key={tenant.id}>
               <td>{tenant.id}</td>
+              <td>{tenant.tenant_id || "—"}</td>
               <td>{tenant.name}</td>
               <td>{tenant.email}</td>
               <td>{tenant.phone}</td>
@@ -72,6 +75,7 @@ export default function TenantTable({ tenants, refresh }) {
           ))}
         </tbody>
       </table>
+      </div>
 
       {selectedTenant && (
         <EditTenantModal
@@ -90,4 +94,3 @@ export default function TenantTable({ tenants, refresh }) {
     </>
   );
 }
-

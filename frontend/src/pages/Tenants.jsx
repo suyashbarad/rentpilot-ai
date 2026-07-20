@@ -30,16 +30,31 @@ export default function Tenants() {
 
       <div className="tenants-header">
 
-        <h2>Tenants Management</h2>
-
-        <AddTenantForm refresh={loadTenants} />
+        <div>
+          <p className="tenants-eyebrow">PROPERTY DIRECTORY</p>
+          <h2>Tenant management</h2>
+          <p className="tenants-subtitle">
+            Add and manage residents, flats, and contact information in one place.
+          </p>
+        </div>
 
       </div>
 
-      <TenantTable
-        tenants={tenants}
-        refresh={loadTenants}
-      />
+      <section className="tenant-panel">
+        <h3>Add a tenant</h3>
+        <AddTenantForm refresh={loadTenants} />
+      </section>
+
+      <section className="tenant-panel tenant-list-panel">
+        <div className="tenant-list-heading">
+          <h3>Residents</h3>
+          <span>{tenants.length} total</span>
+        </div>
+        <TenantTable
+          tenants={tenants}
+          refresh={loadTenants}
+        />
+      </section>
 
     </div>
 

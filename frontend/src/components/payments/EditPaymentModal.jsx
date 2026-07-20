@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import paymentService from "../../services/paymentService";
+import TenantSelect from "../tenants/TenantSelect";
 
 import "./EditPaymentModal.css";
 
@@ -86,11 +87,9 @@ export default function EditPaymentModal({
           onSubmit={handleSubmit}
         >
 
-          <input
-            name="tenant_id"
+          <TenantSelect
             value={form.tenant_id}
             onChange={handleChange}
-            placeholder="Tenant ID"
           />
 
           <input

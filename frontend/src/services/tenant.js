@@ -2,6 +2,8 @@ import api from "./api";
 
 const getAll = () => api.get("/tenants");
 
+const getOptions = () => api.get("/tenants/options");
+
 const create = (data) => api.post("/tenants", data);
 
 const update = (id, data) =>
@@ -12,6 +14,7 @@ const remove = (id) =>
 
 export default {
   getAll,
+  getOptions,
   create,
   update,
   remove,

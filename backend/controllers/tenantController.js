@@ -85,7 +85,7 @@ exports.createTenant = async (req, res) => {
             joining_date,
             agreement_end,
           ],
-          (err) => {
+          (err, result) => {
             if (err) {
     console.error("MYSQL ERROR:", err);
     return res.status(500).json({
@@ -95,10 +95,39 @@ exports.createTenant = async (req, res) => {
     });
 }
 
-            res.status(201).json({
-              success: true,
-              message: "Tenant Added Successfully",
-            });
+            const tenantSql = `
+              INSERT INTO tenants
+                (user_id, flat_id, aadhaar, occupation, family_members, joining_date, agreement_end)
+              VALUES (?, ?, ?, ?, ?, ?, ?)
+            `;
+
+            pool.query(
+              tenantSql,
+              [
+                result.insertId,
+                flat_id,
+                aadhaar,
+                occupation,
+                family_members,
+                joining_date,
+                agreement_end,
+              ],
+              (tenantErr) => {
+                if (tenantErr) {
+                  console.error("TENANT CREATE ERROR:", tenantErr);
+                  return res.status(500).json({
+                    success: false,
+                    error: tenantErr.message,
+                    code: tenantErr.code,
+                  });
+                }
+
+                res.status(201).json({
+                  success: true,
+                  message: "Tenant Added Successfully",
+                });
+              }
+            );
           }
         );
       }
@@ -114,8 +143,11 @@ exports.getAllTenants = (req, res) => {
   const sql = `
     SELECT
       users.*,
+      tenants.id AS tenant_id,
       flats.flat_number
     FROM users
+    LEFT JOIN tenants
+      ON tenants.user_id = users.id
     LEFT JOIN flats
       ON users.flat_id = flats.id
     WHERE users.role='Tenant'
@@ -131,6 +163,36 @@ exports.getAllTenants = (req, res) => {
         code: err.code
     });
 }
+
+    res.json(result);
+  });
+};
+
+// Tenant records are referenced by payments, complaints, visitors, and notifications.
+// Keep this endpoint separate from the management list, whose `id` is a users.id.
+exports.getTenantOptions = (req, res) => {
+  const sql = `
+    SELECT
+      tenants.id,
+      users.name,
+      users.email,
+      flats.flat_number
+    FROM tenants
+    JOIN users ON users.id = tenants.user_id
+    LEFT JOIN flats ON flats.id = tenants.flat_id
+    WHERE users.role = 'Tenant'
+    ORDER BY users.name ASC
+  `;
+
+  pool.query(sql, (err, result) => {
+    if (err) {
+      console.error("TENANT OPTIONS ERROR:", err);
+      return res.status(500).json({
+        success: false,
+        error: err.message,
+        code: err.code,
+      });
+    }
 
     res.json(result);
   });

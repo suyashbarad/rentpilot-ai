@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import notificationService from "../../services/notificationService";
+import TenantSelect from "../tenants/TenantSelect";
 
 import "./AddNotificationForm.css";
 
@@ -57,9 +58,7 @@ export default function AddNotificationForm({ refresh }) {
       onSubmit={handleSubmit}
     >
 
-      <input
-        name="tenant_id"
-        placeholder="Tenant ID"
+      <TenantSelect
         value={form.tenant_id}
         onChange={handleChange}
       />

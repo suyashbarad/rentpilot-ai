@@ -37,6 +37,8 @@ router.post("/", authMiddleware, tenantController.createTenant);
 
 router.get("/", authMiddleware, tenantController.getAllTenants);        //adding one by function which is used in tenantController
 
+router.get("/options", authMiddleware, tenantController.getTenantOptions);
+
 /**
  * @swagger
  * /api/tenants/{id}:

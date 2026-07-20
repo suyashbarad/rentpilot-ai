@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import complaintService from "../../services/complaintService";
+import TenantSelect from "../tenants/TenantSelect";
 
 import "./AddComplaintForm.css";
 
@@ -57,9 +58,7 @@ export default function AddComplaintForm({ refresh }) {
       onSubmit={handleSubmit}
     >
 
-      <input
-        name="tenant_id"
-        placeholder="Tenant ID"
+      <TenantSelect
         value={form.tenant_id}
         onChange={handleChange}
       />
